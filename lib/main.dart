@@ -61,8 +61,8 @@ extension LanguageParsing on Language {
 }
 
 void main(filmsList) => runApp(MaterialApp(
-  home: UserPanel(),
-));
+      home: UserPanel(),
+    ));
 
 class UserPanel extends StatefulWidget {
   const UserPanel({Key? key}) : super(key: key);
@@ -200,9 +200,11 @@ class _UserPanelState extends State<UserPanel> {
                         Row(
                           children: [
                             StatefulBuilder(
-                              builder: (BuildContext context, StateSetter setState) {
-                               return Checkbox(
-                                  fillColor: MaterialStateProperty.resolveWith(getColor),
+                              builder:
+                                  (BuildContext context, StateSetter setState) {
+                                return Checkbox(
+                                  fillColor: MaterialStateProperty.resolveWith(
+                                      getColor),
                                   checkColor: Colors.white,
                                   value: isChecked,
                                   onChanged: (bool? value) {
@@ -211,8 +213,9 @@ class _UserPanelState extends State<UserPanel> {
                                     });
                                   },
                                 );
-                              },),
-                              Text('Description'),
+                              },
+                            ),
+                            Text('Description'),
                           ],
                         ),
                       ],
@@ -303,7 +306,6 @@ class _UserPanelState extends State<UserPanel> {
         child: Icon(Icons.star_purple500_sharp),
         backgroundColor: Colors.deepOrangeAccent,
         onPressed: () => {
-          //filterFilmsList = filmsList,
           filmsList = [],
           allFilms.forEach((film) {
             if (film.voteAverage >= double.parse(_rating!)) {
