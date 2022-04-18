@@ -162,7 +162,6 @@ class _UserPanelState extends State<UserPanel> {
               PopupMenuItem(
                 value: 1,
                 child: TextField(
-                  //controller: getRating,
                   onChanged: (String value) {
                     _rating = value;
                   },
