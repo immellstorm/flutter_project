@@ -71,7 +71,7 @@ class Film extends Characteristics with LanguageConversion {
 
 // pro
 /* Function view  async films list*/
-Future<void> displayViewListFilms(List filmsList) async {
+Future<void> asyncViewListFilms(List filmsList) async {
   await Future.delayed(Duration(seconds: 1));
   for (var item in filmsList) {
     item.getFilm();
@@ -131,7 +131,7 @@ void main() {
 
   // pro
   print('-------pro-----');
-  displayViewListFilms(filmsList);
+  asyncViewListFilms(filmsList);
 
   for(final film in filmsList) {
     film.getFilm();
