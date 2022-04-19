@@ -1,30 +1,12 @@
 import 'package:flutter/material.dart';
 
 // basic
-enum Language {
-  ru,
-  en,
-}
-
-/* Characteristics class
- * @constructor
- */
-abstract class Characteristics {
-  final String id;
-  final String title;
-  final String picture;
-  final double voteAverage;
-  final String releaseDate;
-  final String description;
-  final String language;
-
-  Characteristics(this.id, this.title, this.picture, this.voteAverage, this.releaseDate, this.description, this.language);
-}
+enum Language { ru, en }
 
 /* LanguageConversion mixin, conversion sting to enum */
 mixin LanguageConversion {
-  enumFromString(language){
-    switch(language){
+  enumFromString(language) {
+    switch (language) {
       case 'ru':
         return Language.ru;
       case 'en':
@@ -33,23 +15,9 @@ mixin LanguageConversion {
   }
 }
 
-/* Film class
- * @method display show film characteristics
- * @constructor
- */
-class Film extends Characteristics with LanguageConversion {
-  Film(String id, String title, String picture, double voteAverage, String releaseDate, String description, String language) : super(id, title, picture, voteAverage, releaseDate, description, language);
-
-  void display(){
-    Language lang = enumFromString(language);
-    final prettyLang = lang.toPrettyString();
-    print("id: $id title: $title picture: $picture voteAverage: $voteAverage, releaseDate: $releaseDate, description: $description, language: $prettyLang)");
-  }
-}
-
 /* LanguageParsing extention on Language*/
 extension LanguageParsing on Language {
-  toPrettyString() {
+  String toPrettyString() {
     switch (this) {
       case Language.ru:
         return 'Русский';
@@ -61,41 +29,122 @@ extension LanguageParsing on Language {
   }
 }
 
+/* Characteristics class
+ * @constructor
+ */
+abstract class Characteristics {
+  const Characteristics(this.id, this.title, this.picture, this.voteAverage,
+      this.releaseDate, this.description, this.language);
+
+  final String id;
+  final String title;
+  final String picture;
+  final double voteAverage;
+  final String releaseDate;
+  final String description;
+  final String language;
+
+  void getFilm();
+}
+
+/* Film class
+ * @method display show film characteristics
+ * @constructor
+ */
+class Film extends Characteristics with LanguageConversion {
+  const Film(
+      {required String id,
+      required String title,
+      required String picture,
+      required double voteAverage,
+      required String releaseDate,
+      required String description,
+      required String language})
+      : super(id, title, picture, voteAverage, releaseDate, description,
+            language);
+
+  void getFilm() {
+    Language lang = enumFromString(language);
+    print("id: $id title: $title picture: $picture voteAverage: $voteAverage, releaseDate: $releaseDate, description: $description, language: ${lang.toPrettyString()})");
+  }
+}
+
 // pro
 /* Function view  async films list*/
 Future<void> displayViewListFilms(List filmsList) async {
-  await Future.delayed(Duration(seconds: 3));
+  await Future.delayed(Duration(seconds: 1));
   for (var item in filmsList) {
-     item.display();
+    item.getFilm();
   }
-}
-
-/* Function filter and return list by voteAverage */
-void filtrationByRating(List allFilms, double value) {
-  List filteredResult = [];
-  for (final film in allFilms) {
-    if (film.voteAverage >= value) {
-      filteredResult.add(film.title);
-    }
-  }
-  print(filteredResult);
-
-  return;
 }
 
 void main() {
-  // basic
-  final batman  = Film('1','batmen', 'mouse is flying', 1.5, '20 сентября', 'мышь сдохла', 'en');
-  batman.display();
-  final Language prattylang = Language.ru;
-  print(prattylang.toPrettyString());
+  print('-------basic-----');
+  Film batman = const Film(
+      id: '1',
+      title: 'batmen',
+      picture: 'assets/images/1920x.webp',
+      voteAverage: 1.5,
+      releaseDate: '20.06.1997',
+      description: 'мышь сдохла',
+      language: 'en');
+
+  batman.getFilm();
+
+  List<Film> _getFilmsList() {
+    return [
+      const Film(
+          id: '1',
+          title: 'Batmen',
+          picture: 'assets/images/1920x.webp',
+          voteAverage: 1.5,
+          releaseDate: '20.06.1997',
+          description: 'Богатый псих ловит психов победнее',
+          language: 'en'),
+      const Film(
+          id: '2',
+          title: 'Superman',
+          picture:
+              'https://upload.wikimedia.org/wikipedia/en/5/50/Man_of_Steel_%28film%29_poster.jpg',
+          voteAverage: 4.5,
+          releaseDate: '14.06.2013',
+          description: 'Destroyed my planet, help destroy someone else',
+          language: 'en'),
+      const Film(
+          id: '3',
+          title: 'Aquaman',
+          picture:
+              'https://upload.wikimedia.org/wikipedia/ru/thumb/0/0a/%D0%90%D0%BA%D0%B2%D0%B0%D0%BC%D0%B5%D0%BD.jpg/223px-%D0%90%D0%BA%D0%B2%D0%B0%D0%BC%D0%B5%D0%BD.jpg',
+          voteAverage: 5.5,
+          releaseDate: '13.12.2018',
+          description:
+              'Вот что бывает, когда простой моряк начинает спать с русалками',
+          language: 'ru'),
+    ];
+  }
+
+  List<Film> filmsList = _getFilmsList();
+
+  for (final film in filmsList) {
+    film.getFilm();
+  }
 
   // pro
-  List<Film> filmsList = [
-    Film('1','Batmen', 'https://upload.wikimedia.org/wikipedia/ru/thumb/a/a2/Batman_%26_robin_poster.jpg/196px-Batman_%26_robin_poster.jpg', 1.5, '20.06.1997', 'Главный герой будучи психом, сам ловит таких же психов', 'ru'),
-    Film('2','Super-man', 'https://upload.wikimedia.org/wikipedia/en/5/50/Man_of_Steel_%28film%29_poster.jpg', 2.5, '14.06.2013', 'Destroyed my planet, help destroy someone else', 'en'),
-    Film('3','Aqua-man', 'https://upload.wikimedia.org/wikipedia/ru/thumb/0/0a/%D0%90%D0%BA%D0%B2%D0%B0%D0%BC%D0%B5%D0%BD.jpg/223px-%D0%90%D0%BA%D0%B2%D0%B0%D0%BC%D0%B5%D0%BD.jpg', 3.5, '13.12.2018', 'Вот что бывает, когда простой моряк начинает спать с русалками', 'ru'),
-  ];
+  print('-------pro-----');
   displayViewListFilms(filmsList);
-  filtrationByRating(filmsList, 2.5);
+
+  for(final film in filmsList) {
+    film.getFilm();
+  }
+
+  List<Film> _filteredFilms(List<Film> allFilms) {
+    print('-------filtered list-----');
+    return allFilms.where((element) => element.voteAverage > 5).toList();
+  }
+
+  List<Film> filterdFilms = _filteredFilms(filmsList);
+
+  for(final film in filterdFilms) {
+    film.getFilm();
+  }
 }
