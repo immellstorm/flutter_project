@@ -270,9 +270,6 @@ class _UserPanelState extends State<UserPanel> {
                 value: 1,
                 child: TextField(
                   controller: _rating,
-                  // onChanged: (String value) {
-                  //   _rating = value;
-                  // },
                   style: const TextStyle(color: Colors.deepOrangeAccent),
                   cursorColor: Colors.deepOrangeAccent,
                   decoration: InputDecoration(
