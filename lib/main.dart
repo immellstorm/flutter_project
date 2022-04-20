@@ -1,25 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum Language {
-  ru,
-  en,
-}
-
-/* Characteristics class
- * @constructor
- */
-abstract class Characteristics {
-  final String id;
-  final String title;
-  final String picture;
-  final double voteAverage;
-  final String releaseDate;
-  final String description;
-  String language;
-
-  Characteristics(this.id, this.title, this.picture, this.voteAverage,
-      this.releaseDate, this.description, this.language);
-}
+enum Language { ru, en }
 
 /* LanguageConversion mixin, conversion sting to enum */
 mixin LanguageConversion {
@@ -33,22 +14,9 @@ mixin LanguageConversion {
   }
 }
 
-/* Film class
- * @constructor
- */
-class Film extends Characteristics with LanguageConversion {
-  Film(String id, String title, String picture, double voteAverage,
-      String releaseDate, String description, String language)
-      : super(id, title, picture, voteAverage, releaseDate, description,
-            language) {
-    Language lang = enumFromString(this.language);
-    this.language = lang.toPrettyString();
-  }
-}
-
 /* LanguageParsing extention on Language*/
 extension LanguageParsing on Language {
-  toPrettyString() {
+  String toPrettyString() {
     switch (this) {
       case Language.ru:
         return 'Русский';
@@ -60,7 +28,48 @@ extension LanguageParsing on Language {
   }
 }
 
-void main(filmsList) => runApp(MaterialApp(
+/* Characteristics class
+ * @constructor
+ */
+abstract class Characteristics {
+  Characteristics(this.id, this.title, this.picture, this.voteAverage,
+      this.releaseDate, this.description, this.language);
+
+  final String id;
+  final String title;
+  final String picture;
+  final double voteAverage;
+  final String releaseDate;
+  final String description;
+  String language;
+
+  void getFilm();
+}
+
+/* Film class
+ * @method display show film characteristics
+ * @constructor
+ */
+class Film extends Characteristics with LanguageConversion {
+  Film(
+      {required String id,
+      required String title,
+      required String picture,
+      required double voteAverage,
+      required String releaseDate,
+      required String description,
+      required String language})
+      : super(id, title, picture, voteAverage, releaseDate, description,
+            language);
+
+  @override
+  void getFilm() {
+    Language lang = enumFromString(language);
+    language = lang.toPrettyString();
+  }
+}
+
+void main(filmsList) => runApp(const MaterialApp(
       home: UserPanel(),
     ));
 
@@ -74,50 +83,148 @@ class UserPanel extends StatefulWidget {
 class _UserPanelState extends State<UserPanel> {
   bool isChecked = false;
   Language? _languages;
-  String? _rating;
-  List filmsList = [];
+  List<Film> filmsList = [];
+  List<Film> asyncList = [];
 
   @override
   void initState() {
     super.initState();
     filmsList = [
-      Film('1', 'Batmen', 'assets/images/1920x.webp', 2.0, '20.06.1997',
-          'Главный герой будучи психом, сам ловит таких же психов', 'ru'),
-      Film('2', 'Superman', 'assets/images/sup.jpg', 5.0, '14.06.2013',
-          'Destroyed my planet, help destroy someone else', 'en'),
       Film(
-          '3',
-          'Aquaman',
-          'assets/images/aqua.jpg',
-          7.0,
-          '13.12.2018',
-          'Вот что бывает, когда простой моряк начинает спать с русалками',
-          'ru'),
+          id: '1',
+          title: 'Batmen',
+          picture: 'assets/images/1920x.webp',
+          voteAverage: 1.5,
+          releaseDate: '20.06.1997',
+          description: 'Богатый псих ловит психов победнее',
+          language: 'en'),
+      Film(
+          id: '2',
+          title: 'Superman',
+          picture: 'assets/images/sup.jpg',
+          voteAverage: 4.5,
+          releaseDate: '14.06.2013',
+          description: 'Destroyed my planet, help destroy someone else',
+          language: 'en'),
+      Film(
+          id: '3',
+          title: 'Aquaman',
+          picture: 'assets/images/aqua.jpg',
+          voteAverage: 5.5,
+          releaseDate: '13.12.2018',
+          description:
+              'Вот что бывает, когда простой моряк начинает спать с русалками',
+          language: 'ru'),
     ];
 
-    final asyncFilm = Film('4', 'The Avengers', 'assets/images/mst.jpeg', 9.0,
-        '11.04.1997', 'Пачка бомжей собираются устроить кутеж', 'en');
+    for (final film in filmsList) {
+      film.getFilm();
+    }
 
-    _viewAsyncFilm() async {
-      await new Future.delayed(const Duration(seconds: 2));
+    Future<void> asyncViewListFilms() async {
+      await Future.delayed(const Duration(seconds: 3));
       setState(() {
-        filmsList.add(asyncFilm);
+        asyncList = [
+          Film(
+              id: '4',
+              title: 'Catwoman',
+              picture: 'assets/images/cat.jpg',
+              voteAverage: 6.5,
+              releaseDate: '20.06.1997',
+              description:
+                  'Женщина сошла с ума и решила что ей пора ловить мышей',
+              language: 'ru'),
+          Film(
+              id: '5',
+              title: 'Antman',
+              picture: 'assets/images/ant.jpg',
+              voteAverage: 7.5,
+              releaseDate: '14.06.2013',
+              description:
+                  'Мощеник выпивает элексир и начинает бухать с муровьями',
+              language: 'en'),
+          Film(
+              id: '6',
+              title: 'Ironman',
+              picture: 'assets/images/iron.jpg',
+              voteAverage: 8.5,
+              releaseDate: '13.12.2018',
+              description:
+                  'Вот что бывает, когда простой моряк начинает спать с русалками',
+              language: 'ru'),
+        ];
+
+        for (final film in asyncList) {
+          film.getFilm();
+        }
+
+        filmsList.addAll(asyncList);
       });
     }
 
-    _viewAsyncFilm();
+    asyncViewListFilms();
   }
 
   List allFilms = [
-    Film('1', 'Batmen', 'assets/images/1920x.webp', 2.0, '20.06.1997',
-        'Главный герой будучи психом, сам ловит таких же психов', 'ru'),
-    Film('2', 'Superman', 'assets/images/sup.jpg', 5.0, '14.06.2013',
-        'Destroyed my planet, help destroy someone else', 'en'),
-    Film('3', 'Aquaman', 'assets/images/aqua.jpg', 7.0, '13.12.2018',
-        'Вот что бывает, когда простой моряк начинает спать с русалками', 'ru'),
-    Film('4', 'The Avengers', 'assets/images/mst.jpeg', 9.0, '11.04.1997',
-        'Пачка бомжей собираются устроить кутеж', 'en'),
+    Film(
+        id: '1',
+        title: 'Batmen',
+        picture: 'assets/images/1920x.webp',
+        voteAverage: 1.5,
+        releaseDate: '20.06.1997',
+        description: 'Богатый псих ловит психов победнее',
+        language: 'en'),
+    Film(
+        id: '2',
+        title: 'Superman',
+        picture: 'assets/images/sup.jpg',
+        voteAverage: 4.5,
+        releaseDate: '14.06.2013',
+        description: 'Destroyed my planet, help destroy someone else',
+        language: 'en'),
+    Film(
+        id: '3',
+        title: 'Aquaman',
+        picture: 'assets/images/aqua.jpg',
+        voteAverage: 5.5,
+        releaseDate: '13.12.2018',
+        description:
+            'Вот что бывает, когда простой моряк начинает спать с русалками',
+        language: 'ru'),
+    Film(
+        id: '4',
+        title: 'Catwoman',
+        picture: 'assets/images/cat.jpg',
+        voteAverage: 6.5,
+        releaseDate: '20.06.1997',
+        description: 'Женщина сошла с ума и решила что ей пора ловить мышей',
+        language: 'ru'),
+    Film(
+        id: '5',
+        title: 'Antman',
+        picture: 'assets/images/ant.jpg',
+        voteAverage: 7.5,
+        releaseDate: '14.06.2013',
+        description: 'Мощеник выпивает элексир и начинает бухать с муровьями',
+        language: 'en'),
+    Film(
+        id: '6',
+        title: 'Ironman',
+        picture: 'assets/images/iron.jpg',
+        voteAverage: 8.5,
+        releaseDate: '13.12.2018',
+        description:
+            'Вот что бывает, когда простой моряк начинает спать с русалками',
+        language: 'ru'),
   ];
+
+  final TextEditingController _rating = TextEditingController();
+
+  @override
+  void dispose() {
+    _rating.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -147,7 +254,7 @@ class _UserPanelState extends State<UserPanel> {
             ),
             Container(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(
+                child: const Text(
                   'Movies',
                   style: TextStyle(
                     fontFamily: 'ChakraPetch-Medium',
@@ -157,15 +264,16 @@ class _UserPanelState extends State<UserPanel> {
         ),
         actions: <Widget>[
           PopupMenuButton(
-            icon: Icon(Icons.filter),
+            icon: const Icon(Icons.filter),
             itemBuilder: (context) => [
               PopupMenuItem(
                 value: 1,
                 child: TextField(
-                  onChanged: (String value) {
-                    _rating = value;
-                  },
-                  style: TextStyle(color: Colors.deepOrangeAccent),
+                  controller: _rating,
+                  // onChanged: (String value) {
+                  //   _rating = value;
+                  // },
+                  style: const TextStyle(color: Colors.deepOrangeAccent),
                   cursorColor: Colors.deepOrangeAccent,
                   decoration: InputDecoration(
                     fillColor: Colors.white,
@@ -174,11 +282,13 @@ class _UserPanelState extends State<UserPanel> {
                         const Icon(Icons.star, color: Colors.deepOrangeAccent),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
-                      borderSide: BorderSide(color: Colors.deepOrangeAccent),
+                      borderSide:
+                          const BorderSide(color: Colors.deepOrangeAccent),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
-                      borderSide: BorderSide(color: Colors.deepOrangeAccent),
+                      borderSide:
+                          const BorderSide(color: Colors.deepOrangeAccent),
                     ),
                     hintText: 'Enter rating',
                   ),
@@ -188,7 +298,7 @@ class _UserPanelState extends State<UserPanel> {
             ],
           ),
           PopupMenuButton(
-            icon: Icon(Icons.settings_applications_sharp),
+            icon: const Icon(Icons.settings_applications_sharp),
             itemBuilder: (context) => [
               PopupMenuItem(
                 value: 1,
@@ -214,7 +324,7 @@ class _UserPanelState extends State<UserPanel> {
                                 );
                               },
                             ),
-                            Text('Description'),
+                            const Text('Description'),
                           ],
                         ),
                       ],
@@ -225,14 +335,18 @@ class _UserPanelState extends State<UserPanel> {
             ],
           ),
           PopupMenuButton(
-            icon: Icon(Icons.language),
+            icon: const Icon(Icons.language),
             itemBuilder: (context) => [
               PopupMenuItem(
                 value: 1,
-                child: Column(
+                child:
+                 StatefulBuilder(
+                  builder: (BuildContext context, StateSetter setState) {
+                  return Column(
                   children: <Widget>[
                     RadioListTile<Language>(
                       title: const Text('Русский'),
+                      activeColor: Colors.deepOrange,
                       value: Language.ru,
                       groupValue: _languages,
                       onChanged: (Language? value) {
@@ -243,6 +357,7 @@ class _UserPanelState extends State<UserPanel> {
                     ),
                     RadioListTile<Language>(
                       title: const Text('Английский'),
+                      activeColor: Colors.deepOrange,
                       value: Language.en,
                       groupValue: _languages,
                       onChanged: (Language? value) {
@@ -252,6 +367,8 @@ class _UserPanelState extends State<UserPanel> {
                       },
                     ),
                   ],
+                  );
+                  },
                 ),
               ),
             ],
@@ -263,7 +380,7 @@ class _UserPanelState extends State<UserPanel> {
           itemBuilder: (BuildContext context, int index) {
             return Container(
               color: Colors.black,
-              margin: EdgeInsets.only(bottom: 2.0),
+              margin: const EdgeInsets.only(bottom: 2.0),
               child: Row(
                 children: [
                   Image.asset(
@@ -272,7 +389,7 @@ class _UserPanelState extends State<UserPanel> {
                     height: 100,
                     width: 100,
                   ),
-                  Padding(
+                  const Padding(
                     padding: EdgeInsets.only(left: 15),
                   ),
                   Column(
@@ -281,7 +398,7 @@ class _UserPanelState extends State<UserPanel> {
                     children: [
                       Text(
                         filmsList[index].title,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 25,
                           color: Colors.white,
                           fontFamily: 'ChakraPetch-Medium',
@@ -289,7 +406,7 @@ class _UserPanelState extends State<UserPanel> {
                       ),
                       Text(
                         filmsList[index].language,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 18,
                           color: Colors.white,
                           fontFamily: 'ChakraPetch-Medium',
@@ -302,12 +419,13 @@ class _UserPanelState extends State<UserPanel> {
             );
           }),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.star_purple500_sharp),
+        child: const Icon(Icons.star_purple500_sharp),
         backgroundColor: Colors.deepOrangeAccent,
         onPressed: () => {
           filmsList = [],
           allFilms.forEach((film) {
-            if (film.voteAverage >= double.parse(_rating!)) {
+            if (film.voteAverage >= double.parse(_rating.text)) {
+              film.getFilm();
               setState(() {
                 filmsList.add(film);
               });
