@@ -83,12 +83,15 @@ class UserPanel extends StatefulWidget {
 class _UserPanelState extends State<UserPanel> {
   bool isChecked = false;
   Language? _languages;
+  double doubleRating = 0;
   List<Film> filmsList = [];
   List<Film> asyncList = [];
+  List<Film> allFilms = [];
 
   @override
   void initState() {
     super.initState();
+
     filmsList = [
       Film(
           id: '1',
@@ -121,6 +124,7 @@ class _UserPanelState extends State<UserPanel> {
       film.getFilm();
     }
 
+    /* Function view  async films list*/
     Future<void> asyncViewListFilms() async {
       await Future.delayed(const Duration(seconds: 3));
       setState(() {
@@ -165,58 +169,73 @@ class _UserPanelState extends State<UserPanel> {
     asyncViewListFilms();
   }
 
-  List allFilms = [
-    Film(
-        id: '1',
-        title: 'Batmen',
-        picture: 'assets/images/1920x.webp',
-        voteAverage: 1.5,
-        releaseDate: '20.06.1997',
-        description: 'Богатый псих ловит психов победнее',
-        language: 'en'),
-    Film(
-        id: '2',
-        title: 'Superman',
-        picture: 'assets/images/sup.jpg',
-        voteAverage: 4.5,
-        releaseDate: '14.06.2013',
-        description: 'Destroyed my planet, help destroy someone else',
-        language: 'en'),
-    Film(
-        id: '3',
-        title: 'Aquaman',
-        picture: 'assets/images/aqua.jpg',
-        voteAverage: 5.5,
-        releaseDate: '13.12.2018',
-        description:
-            'Вот что бывает, когда простой моряк начинает спать с русалками',
-        language: 'ru'),
-    Film(
-        id: '4',
-        title: 'Catwoman',
-        picture: 'assets/images/cat.jpg',
-        voteAverage: 6.5,
-        releaseDate: '20.06.1997',
-        description: 'Женщина сошла с ума и решила что ей пора ловить мышей',
-        language: 'ru'),
-    Film(
-        id: '5',
-        title: 'Antman',
-        picture: 'assets/images/ant.jpg',
-        voteAverage: 7.5,
-        releaseDate: '14.06.2013',
-        description: 'Мощеник выпивает элексир и начинает бухать с муровьями',
-        language: 'en'),
-    Film(
-        id: '6',
-        title: 'Ironman',
-        picture: 'assets/images/iron.jpg',
-        voteAverage: 8.5,
-        releaseDate: '13.12.2018',
-        description:
-            'Вот что бывает, когда простой моряк начинает спать с русалками',
-        language: 'ru'),
-  ];
+  List<Film> getAllFilms()
+  {
+    return  allFilms= [
+       Film(
+          id: '1',
+          title: 'Batmen',
+          picture: 'assets/images/1920x.webp',
+          voteAverage: 1.5,
+          releaseDate: '20.06.1997',
+          description: 'Богатый псих ловит психов победнее',
+          language: 'en'),
+      Film(
+          id: '2',
+          title: 'Superman',
+          picture: 'assets/images/sup.jpg',
+          voteAverage: 4.5,
+          releaseDate: '14.06.2013',
+          description: 'Destroyed my planet, help destroy someone else',
+          language: 'en'),
+      Film(
+          id: '3',
+          title: 'Aquaman',
+          picture: 'assets/images/aqua.jpg',
+          voteAverage: 5.5,
+          releaseDate: '13.12.2018',
+          description:
+          'Вот что бывает, когда простой моряк начинает спать с русалками',
+          language: 'ru'),
+      Film(
+          id: '4',
+          title: 'Catwoman',
+          picture: 'assets/images/cat.jpg',
+          voteAverage: 6.5,
+          releaseDate: '20.06.1997',
+          description: 'Женщина сошла с ума и решила что ей пора ловить мышей',
+          language: 'ru'),
+      Film(
+          id: '5',
+          title: 'Antman',
+          picture: 'assets/images/ant.jpg',
+          voteAverage: 7.5,
+          releaseDate: '14.06.2013',
+          description: 'Мощеник выпивает элексир и начинает бухать с муровьями',
+          language: 'en'),
+      Film(
+          id: '6',
+          title: 'Ironman',
+          picture: 'assets/images/iron.jpg',
+          voteAverage: 8.5,
+          releaseDate: '13.12.2018',
+          description:
+          'Вот что бывает, когда простой моряк начинает спать с русалками',
+          language: 'ru'),
+    ];
+  }
+
+  /* Filters the list with all movies and changes the displayed list of movies*/
+  filterFilmList(doubleRating) {
+    filmsList = [];
+    allFilms.forEach((film) {
+      if (film.voteAverage >= doubleRating) {
+        setState(() {
+          filmsList.add(film);
+        });
+      }
+    });
+  }
 
   final TextEditingController _rating = TextEditingController();
 
@@ -419,15 +438,12 @@ class _UserPanelState extends State<UserPanel> {
         child: const Icon(Icons.star_purple500_sharp),
         backgroundColor: Colors.deepOrangeAccent,
         onPressed: () => {
-          filmsList = [],
-          allFilms.forEach((film) {
-            if (film.voteAverage >= double.parse(_rating.text)) {
-              film.getFilm();
-              setState(() {
-                filmsList.add(film);
-              });
-            }
-          }),
+          getAllFilms(),
+          for (final film in allFilms) {
+            film.getFilm(),
+          },
+          doubleRating = double.parse(_rating.text),
+          filterFilmList(doubleRating),
         },
       ),
     );
