@@ -1,64 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project/app/model/film_card_model.dart';
 import 'package:flutter_project/app/widgets/film_card.dart';
-import 'package:flutter_project/app/widgets/film_tile.dart';
-import 'package:flutter_project/app/widgets/main_page.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-// Основа нашего приложения
-    return MaterialApp(
-// Отображается над приложениями в Android, когда пользователь нажимает кнопку «последние приложения».
-      title: 'Films',
-// Стили всего приложения
-      theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
-      ),
-// Наша начальная страница
-      home: const MainPage(),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.menu),
-          onPressed: () {},
-        ),
-        title: Text(title),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.sort),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: Icon(Icons.settings),
-            onPressed: () {},
-          ),
-        ],
-      ),
-      body: const _FilmList(),
-    );
-  }
-}
-
-class _FilmList extends StatelessWidget {
-  const _FilmList({Key? key}) : super(key: key);
+class FilmGrid extends StatelessWidget {
+  const FilmGrid({Key? key}) : super(key: key);
 
   static const List<FilmCardModel> _films = <FilmCardModel>[
     FilmCardModel(
