@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project/app/features/home/widgets/film_list.dart';
+import 'package:flutter_project/app/features/settings/pages/settings_page.dart';
 
 class CatalogPage extends StatelessWidget {
   const CatalogPage({Key? key, required this.title}) : super(key: key);
@@ -20,8 +21,13 @@ class CatalogPage extends StatelessWidget {
             onPressed: () {},
           ),
           IconButton(
-            icon: Icon(Icons.settings),
-            onPressed: () {},
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+              Navigator.pushNamed(
+                context,
+                '/settings',
+              );
+            },
           ),
         ],
       ),

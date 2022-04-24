@@ -4,17 +4,17 @@ import 'package:flutter_project/app/features/home/pages/home_page.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
-
+  static const path = '/';
   static const List<_Tab> _tabs = <_Tab>[
     _Tab(
       icon: Icon(Icons.local_movies_outlined),
       label: 'Feed',
-      page: HomePage(title: 'Films'),
+      page: CatalogPage(title: 'Catalog'),
     ),
     _Tab(
       icon: Icon(Icons.movie_filter),
       label: 'Catalog',
-      page: CatalogPage(title: 'Catalog'),
+      page: HomePage(title: 'Films'),
     ),
   ];
 

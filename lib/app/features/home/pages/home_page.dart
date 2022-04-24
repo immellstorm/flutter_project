@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project/app/features/home/widgets/film_grid.dart';
+import 'package:flutter_project/app/features/settings/pages/settings_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key, required this.title}) : super(key: key);
@@ -21,8 +22,13 @@ class HomePage extends StatelessWidget {
             onPressed: () {},
           ),
           IconButton(
-            icon: Icon(Icons.settings),
-            onPressed: () {},
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+              Navigator.pushNamed(
+                context,
+                '/settings',
+              );
+            },
           ),
         ],
       ),
