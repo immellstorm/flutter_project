@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project/app/widgets/image_nework.dart';
+import 'package:flutter_project/app/widgets/image_network.dart';
 import 'package:flutter_project/app/model/film_card_model.dart';
 
 class FilmTile extends StatelessWidget {

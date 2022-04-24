@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
       title: 'Films',
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
+        fontFamily: 'ChakraPetch-Medium',
       ),
       initialRoute: MainPage.path,
       routes: {

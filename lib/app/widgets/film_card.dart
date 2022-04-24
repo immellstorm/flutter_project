@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project/app/model/film_card_model.dart';
 import 'package:flutter_project/app/widgets/buttons/primary_button.dart';
-import 'package:flutter_project/app/widgets/image_nework.dart';
+import 'package:flutter_project/app/widgets/image_network.dart';
 
 class FilmCard extends StatelessWidget {
   const FilmCard({
@@ -57,6 +57,30 @@ class FilmCard extends StatelessWidget {
             right: 4,
             top: 4,
             child: _RatingChip(voteAverage),
+          ),
+          Positioned(
+            child: ClipRRect(
+              child: Text(
+                title,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 26,
+                  shadows: <Shadow>[
+                    Shadow(
+                      offset: Offset(3.0, 3.0),
+                      blurRadius: 2.0,
+                      color: Colors.black,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            top: 50,
+            left: 20,
+            right: 20,
           ),
           Positioned(
             left: 8,
