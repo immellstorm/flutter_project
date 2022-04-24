@@ -9,12 +9,12 @@ class MainPage extends StatefulWidget {
     _Tab(
       icon: Icon(Icons.local_movies_outlined),
       label: 'Feed',
-      page: CatalogPage(title: 'Catalog'),
+      page: CatalogPage(title: 'Feed'),
     ),
     _Tab(
       icon: Icon(Icons.movie_filter),
       label: 'Catalog',
-      page: HomePage(title: 'Films'),
+      page: HomePage(title: 'Catalog'),
     ),
   ];
 
