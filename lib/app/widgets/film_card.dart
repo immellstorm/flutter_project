@@ -4,7 +4,7 @@ import 'package:flutter_project/app/widgets/buttons/primary_button.dart';
 import 'package:flutter_project/app/widgets/image_network.dart';
 
 class FilmCard extends StatelessWidget {
-  const FilmCard({
+  FilmCard({
     required this.id,
     required this.title,
     required this.picture,
@@ -29,6 +29,7 @@ class FilmCard extends StatelessWidget {
   final String title;
   final String picture;
   final double voteAverage;
+  bool isPressed = false;
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +58,26 @@ class FilmCard extends StatelessWidget {
             right: 4,
             top: 4,
             child: _RatingChip(voteAverage),
+          ),
+          Positioned(
+            left: 4,
+            top: 4,
+            child: StatefulBuilder(
+              builder: (BuildContext context, StateSetter setState) {
+                return IconButton(
+                  onPressed: () {
+                    setState(() {
+                      isPressed = !isPressed;
+                    });
+                  },
+                  icon: Icon(
+                    Icons.favorite,
+                    size: 30,
+                    color: isPressed ? Colors.deepPurple : Colors.white,
+                  ),
+                );
+              },
+            ),
           ),
           Positioned(
             child: ClipRRect(
