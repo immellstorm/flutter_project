@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project/app/features/home/pages/description_page.dart';
 import 'package:flutter_project/app/model/film_card_model.dart';
-import 'package:flutter_project/app/widgets/film_card.dart';
+import 'package:flutter_project/app/widgets/film_tile.dart';
 
-class FilmGrid extends StatelessWidget {
-  const FilmGrid({Key? key}) : super(key: key);
+class FilmDescription extends StatelessWidget {
+  const FilmDescription({required this.arguments, Key? key}) : super(key: key);
+  final DescriptionArguments arguments;
 
   static const List<FilmCardModel> _films = <FilmCardModel>[
     FilmCardModel(
@@ -63,18 +65,6 @@ class FilmGrid extends StatelessWidget {
   ];
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      itemCount: _films.length,
-      itemBuilder: (BuildContext context, int index) {
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: FilmCard.fromModel(model: _films[index]),
-        );
-      },
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: 2 / 3,
-      ),
-    );
+    return FilmTile.fromModel(model: _films[arguments.id]);
   }
 }

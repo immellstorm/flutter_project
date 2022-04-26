@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project/app/features/home/pages/description_page.dart';
 import 'package:flutter_project/app/model/film_card_model.dart';
 import 'package:flutter_project/app/widgets/buttons/primary_button.dart';
 import 'package:flutter_project/app/widgets/image_network.dart';
@@ -107,10 +108,13 @@ class FilmCard extends StatelessWidget {
             left: 8,
             right: 8,
             bottom: 8,
-            child: PrimaryButton(
-              'More',
-              onPressed: () {},
-            ),
+            child: PrimaryButton('More', onPressed: () {
+              Navigator.pushNamed(
+                context,
+                '/description',
+                arguments: DescriptionArguments(id),
+              );
+            }),
           ),
         ],
       ),

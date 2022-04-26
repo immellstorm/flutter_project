@@ -7,7 +7,7 @@ class FilmList extends StatelessWidget {
 
   static const List<FilmCardModel> _films = <FilmCardModel>[
     FilmCardModel(
-      id: 1,
+      id: 0,
       title: 'Batmen',
       picture:
           'https://img1.akspic.ru/originals/8/2/9/5/6/165928-the_batman_2022_poster-2560x1440.jpg',
@@ -16,7 +16,7 @@ class FilmList extends StatelessWidget {
       description: 'Богатый псих ловит психов победнее',
     ),
     FilmCardModel(
-      id: 2,
+      id: 1,
       title: 'Superman',
       picture:
           'https://static2.srcdn.com/wordpress/wp-content/uploads/2018/01/Superman-Red-Son-Gotham-by-Gaslight-Animation.jpg',
@@ -25,7 +25,7 @@ class FilmList extends StatelessWidget {
       description: 'Destroyed my planet, help destroy someone else',
     ),
     FilmCardModel(
-      id: 3,
+      id: 2,
       title: 'Aquaman',
       picture:
           'https://cdn.fishki.net/upload/post/2019/03/27/2925512/bf388f6238417a1ee4b748f6c50da272.jpg',
@@ -35,7 +35,7 @@ class FilmList extends StatelessWidget {
           'Вот что бывает, когда простой моряк начинает спать с русалками',
     ),
     FilmCardModel(
-      id: 4,
+      id: 3,
       title: 'Catwoman',
       picture: 'https://gamebomb.ru/files/galleries/001/d/df/340189.jpg',
       voteAverage: 6.5,
@@ -43,7 +43,7 @@ class FilmList extends StatelessWidget {
       description: 'Женщина сошла с ума и решила что ей пора ловить мышей',
     ),
     FilmCardModel(
-      id: 5,
+      id: 4,
       title: 'Antman',
       picture:
           'https://www.animatedtimes.com/wp-content/uploads/2021/01/peyton-reed-ant-man-3.jpg',
@@ -52,7 +52,7 @@ class FilmList extends StatelessWidget {
       description: 'Мошеник выпивает элексир и начинает бухать с муровьями',
     ),
     FilmCardModel(
-      id: 6,
+      id: 5,
       title: 'Ironman',
       picture: 'https://i.artfile.ru/2880x1800_807289_[www.ArtFile.ru].jpg',
       voteAverage: 8.5,
@@ -64,8 +64,9 @@ class FilmList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      itemCount: _films.length,
       itemBuilder: (BuildContext context, int index) {
-        return FilmTile.fromModel(model: _films[index % _films.length]);
+        return FilmTile.fromModel(model: _films[index]);
       },
     );
   }

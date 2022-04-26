@@ -9,9 +9,7 @@ class SettingsArguments {
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({required this.arguments, Key? key}) : super(key: key);
-
   final SettingsArguments arguments;
-
   static const path = '/settings';
 
   @override

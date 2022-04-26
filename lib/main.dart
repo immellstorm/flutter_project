@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project/app/features/home/pages/description_page.dart';
 import 'package:flutter_project/app/features/settings/pages/settings_page.dart';
 import 'package:flutter_project/app/widgets/main_page.dart';
 import 'package:flutter_project/app/widgets/not_found_page.dart';
@@ -40,6 +41,18 @@ class MyApp extends StatelessWidget {
           return MaterialPageRoute(
             builder: (context) {
               return SettingsPage(
+                arguments: arguments,
+              );
+            },
+          );
+        }
+
+        if (settings.name == DescriptionPage.path) {
+          final DescriptionArguments arguments =
+              settings.arguments as DescriptionArguments;
+          return MaterialPageRoute(
+            builder: (context) {
+              return DescriptionPage(
                 arguments: arguments,
               );
             },
