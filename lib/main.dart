@@ -4,7 +4,7 @@ enum Language { ru, en }
 
 /* LanguageConversion mixin, conversion sting to enum */
 mixin LanguageConversion {
-  enumFromString(language) {
+  enumFromString(String language) {
     switch (language) {
       case 'ru':
         return Language.ru;
@@ -69,30 +69,134 @@ class Film extends Characteristics with LanguageConversion {
   }
 }
 
-void main(filmsList) => runApp(const MaterialApp(
-      home: UserPanel(),
-    ));
+class FilmCart extends StatelessWidget {
+  const FilmCart(
+      {Key? key,
+      required this.id,
+      required this.title,
+      required this.picture,
+      required this.voteAverage,
+      required this.releaseDate,
+      required this.description,
+      required this.language})
+      : super(key: key);
 
-class UserPanel extends StatefulWidget {
-  const UserPanel({Key? key}) : super(key: key);
+  final String id;
+  final String title;
+  final String picture;
+  final double voteAverage;
+  final String releaseDate;
+  final String description;
+  final String language;
 
   @override
-  State<UserPanel> createState() => _UserPanelState();
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16.0),
+      color: Colors.orange,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            flex: 1,
+            child: Image.asset(picture),
+          ),
+          Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'title: ' + title,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontFamily: 'ChakraPetch-Medium',
+                      ),
+                    ),
+                    Text(
+                      'voteAverage: ' + voteAverage.toString(),
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontFamily: 'ChakraPetch-Medium',
+                      ),
+                    ),
+                    Text(
+                      'releaseDate: ' + releaseDate,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontFamily: 'ChakraPetch-Medium',
+                      ),
+                    ),
+                    Text(
+                      'description: ' + description,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontFamily: 'ChakraPetch-Medium',
+                      ),
+                    ),
+                    Text(
+                      'language: ' + language,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontFamily: 'ChakraPetch-Medium',
+                      ),
+                    ),
+                  ],
+                ),
+              ))
+        ],
+      ),
+    );
+  }
 }
 
-class _UserPanelState extends State<UserPanel> {
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Movies',
+      theme: ThemeData(
+        appBarTheme: const AppBarTheme(color: Colors.deepOrange),
+        fontFamily: 'ChakraPetch-Medium',
+      ),
+      home: const HomePage(),
+    );
+  }
+}
+
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  List<Film> movies = [];
   bool isChecked = false;
-  Language? _languages;
-  double doubleRating = 0;
-  List<Film> filmsList = [];
-  List<Film> asyncList = [];
-  List<Film> allFilms = [];
 
   @override
   void initState() {
+    _getFilms().then((value) {
+      setState(() {
+        movies = value;
+      });
+    });
     super.initState();
+  }
 
-    filmsList = [
+  Future<List<Film>> _getFilms() async {
+    await Future.delayed(const Duration(seconds: 1));
+    List<Film> filmsList = [
       Film(
           id: '1',
           title: 'Batmen',
@@ -118,85 +222,6 @@ class _UserPanelState extends State<UserPanel> {
           description:
               'Вот что бывает, когда простой моряк начинает спать с русалками',
           language: 'ru'),
-    ];
-
-    for (final film in filmsList) {
-      film.getFilm();
-    }
-
-    /* Function view  async films list*/
-    Future<void> asyncViewListFilms() async {
-      await Future.delayed(const Duration(seconds: 3));
-      setState(() {
-        asyncList = [
-          Film(
-              id: '4',
-              title: 'Catwoman',
-              picture: 'assets/images/cat.jpg',
-              voteAverage: 6.5,
-              releaseDate: '20.06.1997',
-              description:
-                  'Женщина сошла с ума и решила что ей пора ловить мышей',
-              language: 'ru'),
-          Film(
-              id: '5',
-              title: 'Antman',
-              picture: 'assets/images/ant.jpg',
-              voteAverage: 7.5,
-              releaseDate: '14.06.2013',
-              description:
-                  'Мощеник выпивает элексир и начинает бухать с муровьями',
-              language: 'en'),
-          Film(
-              id: '6',
-              title: 'Ironman',
-              picture: 'assets/images/iron.jpg',
-              voteAverage: 8.5,
-              releaseDate: '13.12.2018',
-              description:
-                  'Вот что бывает, когда простой моряк начинает спать с русалками',
-              language: 'ru'),
-        ];
-
-        for (final film in asyncList) {
-          film.getFilm();
-        }
-
-        filmsList.addAll(asyncList);
-      });
-    }
-
-    asyncViewListFilms();
-  }
-
-  List<Film> getAllFilms()
-  {
-    return  allFilms= [
-       Film(
-          id: '1',
-          title: 'Batmen',
-          picture: 'assets/images/1920x.webp',
-          voteAverage: 1.5,
-          releaseDate: '20.06.1997',
-          description: 'Богатый псих ловит психов победнее',
-          language: 'en'),
-      Film(
-          id: '2',
-          title: 'Superman',
-          picture: 'assets/images/sup.jpg',
-          voteAverage: 4.5,
-          releaseDate: '14.06.2013',
-          description: 'Destroyed my planet, help destroy someone else',
-          language: 'en'),
-      Film(
-          id: '3',
-          title: 'Aquaman',
-          picture: 'assets/images/aqua.jpg',
-          voteAverage: 5.5,
-          releaseDate: '13.12.2018',
-          description:
-          'Вот что бывает, когда простой моряк начинает спать с русалками',
-          language: 'ru'),
       Film(
           id: '4',
           title: 'Catwoman',
@@ -220,49 +245,33 @@ class _UserPanelState extends State<UserPanel> {
           voteAverage: 8.5,
           releaseDate: '13.12.2018',
           description:
-          'Вот что бывает, когда простой моряк начинает спать с русалками',
+              'Вот что бывает, когда простой моряк начинает спать с русалками',
           language: 'ru'),
     ];
-  }
 
-  /* Filters the list with all movies and changes the displayed list of movies*/
-  filterFilmList(doubleRating) {
-    filmsList = [];
-    allFilms.forEach((film) {
-      if (film.voteAverage >= doubleRating) {
-        setState(() {
-          filmsList.add(film);
-        });
-      }
-    });
-  }
+    for (final film in filmsList) {
+      film.getFilm();
+    }
 
-  final TextEditingController _rating = TextEditingController();
-
-  @override
-  void dispose() {
-    _rating.dispose();
-    super.dispose();
+    return filmsList;
   }
 
   @override
   Widget build(BuildContext context) {
-    Color getColor(Set<MaterialState> states) {
+    Color _getColor(Set<MaterialState> states) {
       const Set<MaterialState> interactiveStates = <MaterialState>{
         MaterialState.pressed,
         MaterialState.hovered,
         MaterialState.focused,
       };
       if (states.any(interactiveStates.contains)) {
-        return Colors.blue;
+        return Colors.orange;
       }
-      return Colors.red;
+      return Colors.black;
     }
 
     return Scaffold(
-      backgroundColor: Colors.white70,
       appBar: AppBar(
-        backgroundColor: Colors.deepOrangeAccent,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -281,171 +290,77 @@ class _UserPanelState extends State<UserPanel> {
                 )),
           ],
         ),
-        actions: <Widget>[
-          PopupMenuButton(
-            icon: const Icon(Icons.filter),
-            itemBuilder: (context) => [
-              PopupMenuItem(
-                value: 1,
-                child: TextField(
-                  controller: _rating,
-                  style: const TextStyle(color: Colors.deepOrangeAccent),
-                  cursorColor: Colors.deepOrangeAccent,
-                  decoration: InputDecoration(
-                    fillColor: Colors.white,
-                    filled: true,
-                    prefixIcon:
-                        const Icon(Icons.star, color: Colors.deepOrangeAccent),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                      borderSide:
-                          const BorderSide(color: Colors.deepOrangeAccent),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                      borderSide:
-                          const BorderSide(color: Colors.deepOrangeAccent),
-                    ),
-                    hintText: 'Enter rating',
-                  ),
-                  keyboardType: TextInputType.number,
-                ),
-              ),
-            ],
-          ),
-          PopupMenuButton(
-            icon: const Icon(Icons.settings_applications_sharp),
-            itemBuilder: (context) => [
-              PopupMenuItem(
-                value: 1,
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+                color: Colors.orange,
                 child: Column(
-                  children: <Widget>[
-                    Column(
+                  children: [
+                    Row(
                       children: [
-                        Row(
-                          children: [
-                            StatefulBuilder(
-                              builder:
-                                  (BuildContext context, StateSetter setState) {
-                                return Checkbox(
-                                  fillColor: MaterialStateProperty.resolveWith(
-                                      getColor),
-                                  checkColor: Colors.white,
-                                  value: isChecked,
-                                  onChanged: (bool? value) {
-                                    setState(() {
-                                      isChecked = value!;
-                                    });
-                                  },
-                                );
-                              },
-                            ),
-                            const Text('Description'),
-                          ],
+                        Checkbox(
+                            fillColor:
+                                MaterialStateProperty.resolveWith(_getColor),
+                            value: isChecked,
+                            onChanged: (bool? changeValue) {
+                              setState(() {
+                                isChecked = changeValue ?? false;
+                              });
+                            }),
+                        const Text(
+                          'Рейтинг больше 5',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: 'ChakraPetch-Medium',
+                          ),
                         ),
                       ],
                     ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          PopupMenuButton(
-            icon: const Icon(Icons.language),
-            itemBuilder: (context) => [
-              PopupMenuItem(
-                value: 1,
-                child:
-                 StatefulBuilder(
-                  builder: (BuildContext context, StateSetter setState) {
-                  return Column(
-                  children: <Widget>[
-                    RadioListTile<Language>(
-                      title: const Text('Русский'),
-                      activeColor: Colors.deepOrange,
-                      value: Language.ru,
-                      groupValue: _languages,
-                      onChanged: (Language? value) {
-                        setState(() {
-                          _languages = value;
-                        });
-                      },
-                    ),
-                    RadioListTile<Language>(
-                      title: const Text('Английский'),
-                      activeColor: Colors.deepOrange,
-                      value: Language.en,
-                      groupValue: _languages,
-                      onChanged: (Language? value) {
-                        setState(() {
-                          _languages = value;
-                        });
-                      },
+                    SizedBox(
+                      child: ElevatedButton.icon(
+                        onPressed: filterFilms,
+                        label: const Text('Поиск'),
+                        icon: const Icon(Icons.search_off),
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.black,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 15),
+                            textStyle: const TextStyle(
+                                fontSize: 16,
+                                fontFamily: 'ChakraPetch-Medium')),
+                      ),
                     ),
                   ],
-                  );
-                  },
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-      body: ListView.builder(
-          itemCount: filmsList.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Container(
-              color: Colors.black,
-              margin: const EdgeInsets.only(bottom: 2.0),
-              child: Row(
-                children: [
-                  Image.asset(
-                    filmsList[index].picture,
-                    fit: BoxFit.cover,
-                    height: 100,
-                    width: 100,
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(left: 15),
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        filmsList[index].title,
-                        style: const TextStyle(
-                          fontSize: 25,
-                          color: Colors.white,
-                          fontFamily: 'ChakraPetch-Medium',
-                        ),
-                      ),
-                      Text(
-                        filmsList[index].language,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          color: Colors.white,
-                          fontFamily: 'ChakraPetch-Medium',
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            );
-          }),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.star_purple500_sharp),
-        backgroundColor: Colors.deepOrangeAccent,
-        onPressed: () => {
-          getAllFilms(),
-          for (final film in allFilms) {
-            film.getFilm(),
-          },
-          doubleRating = double.parse(_rating.text),
-          filterFilmList(doubleRating),
-        },
+                )),
+            ...List.generate(movies.length, (index) {
+              return FilmCart(
+                id: movies[index].id,
+                title: movies[index].title,
+                picture: movies[index].picture,
+                voteAverage: movies[index].voteAverage,
+                releaseDate: movies[index].releaseDate,
+                description: movies[index].description,
+                language: movies[index].language,
+              );
+            }),
+          ],
+        ),
       ),
     );
+  }
+
+  Future<void> filterFilms() async {
+    await _getFilms().then((valueFilms) {
+      setState(() {
+        if (isChecked) {
+          movies =
+              valueFilms.where((element) => element.voteAverage > 5).toList();
+        } else {
+          movies = valueFilms;
+        }
+      });
+    });
   }
 }
