@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project/app/features/home/widgets/film_description.dart';
+import 'package:flutter_project/app/features/description/widgets/film_description.dart';
 
 class DescriptionArguments {
   const DescriptionArguments(this.id);

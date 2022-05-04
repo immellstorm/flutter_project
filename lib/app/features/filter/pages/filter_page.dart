@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project/app/model/film_card_model.dart';
+import 'package:flutter_project/app/widgets/buttons/primary_button.dart';
 import 'package:flutter_project/app/widgets/film_card.dart';
 
 class FilterPage extends StatefulWidget {
@@ -122,16 +123,10 @@ class _FilterPageState extends State<FilterPage> {
                   ],
                 ),
                 SizedBox(
-                  child: ElevatedButton.icon(
+                  width: 200,
+                  child: PrimaryButton(
+                    'Search',
                     onPressed: filterFilms,
-                    label: const Text('Поиск'),
-                    icon: const Icon(Icons.search),
-                    style: ElevatedButton.styleFrom(
-                        shape: const StadiumBorder(),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 15),
-                        textStyle: const TextStyle(
-                            fontSize: 16, fontFamily: 'ChakraPetch-Medium')),
                   ),
                 )
               ],

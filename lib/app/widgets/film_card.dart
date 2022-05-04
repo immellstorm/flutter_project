@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project/app/features/home/pages/description_page.dart';
+import 'package:flutter_project/app/features/description/page/description_page.dart';
 import 'package:flutter_project/app/model/film_card_model.dart';
 import 'package:flutter_project/app/widgets/buttons/primary_button.dart';
 import 'package:flutter_project/app/widgets/image_network.dart';

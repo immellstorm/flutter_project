@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project/app/features/home/pages/description_page.dart';
-import 'package:flutter_project/app/features/home/pages/filter_page.dart';
+import 'package:flutter_project/app/features/description/page/description_page.dart';
+import 'package:flutter_project/app/features/filter/pages/filter_page.dart';
 import 'package:flutter_project/app/features/settings/pages/settings_page.dart';
 import 'package:flutter_project/app/widgets/main_page.dart';
 import 'package:flutter_project/app/widgets/not_found_page.dart';
