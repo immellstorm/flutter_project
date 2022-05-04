@@ -11,6 +11,7 @@ class ImageNetwork extends StatelessWidget {
   Widget build(BuildContext context) {
     return Image.network(
       pictureUrl,
+      height: 200,
       loadingBuilder: (BuildContext context, Widget child,
           ImageChunkEvent? loadingProgress) {
         if (loadingProgress == null) {

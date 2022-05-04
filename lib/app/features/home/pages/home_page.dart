@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project/app/features/home/widgets/film_grid.dart';
+import 'package:flutter_project/app/features/home/widgets/film_list.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key, required this.title}) : super(key: key);
@@ -11,14 +11,19 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.menu),
+          icon: const Icon(Icons.menu),
           onPressed: () {},
         ),
         title: Text(title),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.sort),
-            onPressed: () {},
+            icon: const Icon(Icons.sort),
+            onPressed: () {
+              Navigator.pushNamed(
+                context,
+                '/filter',
+              );
+            },
           ),
           IconButton(
             icon: const Icon(Icons.settings),
@@ -31,7 +36,7 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      body: const FilmGrid(),
+      body: const FilmList(),
     );
   }
 }

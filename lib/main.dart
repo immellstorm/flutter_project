@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project/app/features/home/pages/description_page.dart';
+import 'package:flutter_project/app/features/home/pages/filter_page.dart';
 import 'package:flutter_project/app/features/settings/pages/settings_page.dart';
 import 'package:flutter_project/app/widgets/main_page.dart';
 import 'package:flutter_project/app/widgets/not_found_page.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
         '/settings': (context) => const SettingsPage(
               arguments: SettingsArguments('BOBIK'),
             ),
+        '/filter': (context) => const FilterPage(),
       },
       onGenerateRoute: (settings) {
         if (settings.name == MainPage.path) {

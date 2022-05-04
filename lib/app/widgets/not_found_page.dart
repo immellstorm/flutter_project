@@ -5,8 +5,21 @@ class NotFoundPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Text('Not found page'),
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            Text(
+              'Not found page',
+              style: TextStyle(
+                color: Colors.deepPurple,
+                fontSize: 26,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

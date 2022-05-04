@@ -5,6 +5,7 @@ import 'package:flutter_project/app/widgets/film_tile.dart';
 
 class FilmDescription extends StatelessWidget {
   const FilmDescription({required this.arguments, Key? key}) : super(key: key);
+
   final DescriptionArguments arguments;
 
   static const List<FilmCardModel> _films = <FilmCardModel>[

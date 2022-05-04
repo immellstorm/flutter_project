@@ -40,7 +40,14 @@ class FilmTile extends StatelessWidget {
     return Row(
       children: <Widget>[
         Expanded(
-          child: ImageNetwork(picture),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: ImageNetwork(picture),
+              ),
+            ],
+          ),
         ),
         Expanded(
           flex: 2,
