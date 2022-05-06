@@ -33,55 +33,63 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         backgroundColor: MovieColors.backgroundBlackColor,
-        body: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10, bottom: 20),
-              child: TextField(
-                controller: textController,
-                maxLines: 1,
-                decoration: const InputDecoration(
-                  labelText: MovieLocal.search,
-                  filled: true,
-                  fillColor: Colors.white,
+        body: RefreshIndicator(
+          onRefresh: () async {
+            setState(() {
+              didChangeDependencies();
+            });
+          },
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 10, right: 10, bottom: 20),
+                child: TextField(
+                  controller: textController,
+                  maxLines: 1,
+                  decoration: const InputDecoration(
+                    labelText: MovieLocal.search,
+                    filled: true,
+                    fillColor: Colors.white,
+                  ),
+                  onChanged: _onSearchFieldTextChanged,
                 ),
-                onChanged: _onSearchFieldTextChanged,
               ),
-            ),
-            BlocBuilder<HomeBloc, HomeState>(
-              buildWhen: (oldState, newState) => oldState.data != newState.data,
-              builder: (context, state) {
-                return FutureBuilder<HomeModel?>(
-                  future: state.data,
-                  builder:
-                      (BuildContext context, AsyncSnapshot<HomeModel?> data) {
-                    return data.connectionState != ConnectionState.done
-                        ? const Center(child: CircularProgressIndicator())
-                        : data.hasData
-                            ? data.data?.results?.isNotEmpty == true
-                                ? Expanded(
-                                    child: ListView.builder(
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        return MovieCard(
-                                          movieCardModel:
-                                              data.data?.results?[index],
-                                          key: ValueKey<int>(
-                                              data.data?.results?[index].id ??
-                                                  -1),
-                                        );
-                                      },
-                                      itemCount:
-                                          data.data?.results?.length ?? 0,
-                                    ),
-                                  )
-                                : const _Empty()
-                            : const _Error();
-                  },
-                );
-              },
-            ),
-          ],
+              BlocBuilder<HomeBloc, HomeState>(
+                buildWhen: (oldState, newState) =>
+                    oldState.data != newState.data,
+                builder: (context, state) {
+                  return FutureBuilder<HomeModel?>(
+                    future: state.data,
+                    builder:
+                        (BuildContext context, AsyncSnapshot<HomeModel?> data) {
+                      return data.connectionState != ConnectionState.done
+                          ? const Center(child: CircularProgressIndicator())
+                          : data.hasData
+                              ? data.data?.results?.isNotEmpty == true
+                                  ? Expanded(
+                                      child: ListView.builder(
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          return MovieCard(
+                                            movieCardModel:
+                                                data.data?.results?[index],
+                                            key: ValueKey<int>(
+                                                data.data?.results?[index].id ??
+                                                    -1),
+                                          );
+                                        },
+                                        itemCount:
+                                            data.data?.results?.length ?? 0,
+                                      ),
+                                    )
+                                  : const _Empty()
+                              : const _Error();
+                    },
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

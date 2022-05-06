@@ -12,7 +12,6 @@ void showErrorDialog({BuildContext? context, required String error}) {
   }
 }
 
-/// Простой диалог отображения ошибки
 class ErrorDialog extends StatelessWidget {
   final String? error;
 
