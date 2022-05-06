@@ -34,6 +34,9 @@ dependencies:
   pretty_dio_logger: ^1.1.1
   flutter_html: ^2.2.1
   cached_network_image: ^3.2.0
+  equatable: 2.0.3
+  flutter_bloc: ^8.0.1
+  flutter_cache_manager: ^3.3.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
