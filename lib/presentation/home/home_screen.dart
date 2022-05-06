@@ -14,29 +14,44 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   Future<HomeModel?>? dataLoadingState;
 
+  Future _refresh() async {
+    Future<HomeModel?> newMovies =
+        MoviesRepository.loadData(context, q: MovieQuery.initialQ);
+    setState(() {
+      dataLoadingState = newMovies;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     dataLoadingState ??=
         MoviesRepository.loadData(context, q: MovieQuery.initialQ);
-    return SafeArea(
-      child: FutureBuilder<HomeModel?>(
-        future: dataLoadingState,
-        builder: (BuildContext context, AsyncSnapshot<HomeModel?> data) {
-          return data.connectionState != ConnectionState.done
-              ? const Center(child: CircularProgressIndicator())
-              : data.hasData
-                  ? ListView.builder(
-                      itemBuilder: (BuildContext context, int index) {
-                        return MovieCard(
-                          movieCardModel: data.data?.results?[index],
-                          key: ValueKey<int>(
-                              data.data?.results?[index].id ?? -1),
-                        );
-                      },
-                      itemCount: data.data?.results?.length ?? 0,
-                    )
-                  : Image.network(MovieQuery.pisecImageUrl, fit: BoxFit.cover);
-        },
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Movies'),
+      ),
+      body: RefreshIndicator(
+        onRefresh: _refresh,
+        child: FutureBuilder<HomeModel?>(
+          future: dataLoadingState,
+          builder: (BuildContext context, AsyncSnapshot<HomeModel?> data) {
+            return data.connectionState != ConnectionState.done
+                ? const Center(child: CircularProgressIndicator())
+                : data.hasData
+                    ? ListView.builder(
+                        itemBuilder: (BuildContext context, int index) {
+                          return MovieCard(
+                            movieCardModel: data.data?.results?[index],
+                            key: ValueKey<int>(
+                                data.data?.results?[index].id ?? -1),
+                          );
+                        },
+                        itemCount: data.data?.results?.length ?? 0,
+                      )
+                    : Image.network(MovieQuery.pisecImageUrl,
+                        fit: BoxFit.cover);
+          },
+        ),
       ),
     );
   }
