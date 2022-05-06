@@ -16,6 +16,8 @@ class MovieLocal {
   static const String ratingPrefix = 'Grade: ';
   static const String ratingSuffix = '/ 10';
   static const String search = 'Search';
+  static const String addFavourites = 'In wishlist';
+  static const String deleteFavourites = 'Out wishlist';
 }
 
 class MovieColors {

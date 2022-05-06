@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_project/data/repositories/movies_repository.dart';
-import 'package:flutter_project/error_bloc/error_bloc.dart';
-import 'package:flutter_project/error_bloc/error_event.dart';
-import 'package:flutter_project/presentation/home/bloc/home_bloc.dart';
-import 'package:flutter_project/presentation/home/home_screen.dart';
+import 'package:flutter_project/presentation/main_page.dart';
+import 'package:flutter_project/components/widgets/not_found_page.dart';
+import 'package:flutter_project/presentation/settings/pages/settings_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,26 +14,28 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Movies',
-      home: BlocProvider<ErrorBloc>(
-        lazy: false,
-        create: (_) => ErrorBloc(),
-        child: RepositoryProvider<MoviesRepository>(
-          lazy: true,
-          create: (BuildContext context) => MoviesRepository(
-            onErrorHandler: (String code, String message) {
-              context
-                  .read<ErrorBloc>()
-                  .add(ShowDialogEvent(title: code, message: message));
+      initialRoute: MainPage.path,
+      onGenerateRoute: (RouteSettings settings) {
+        if (settings.name == MainPage.path) {
+          return MaterialPageRoute(
+            builder: (context) {
+              return const MainPage();
             },
-          ),
-          child: BlocProvider<HomeBloc>(
-            lazy: false,
-            create: (BuildContext context) =>
-                HomeBloc(context.read<MoviesRepository>()),
-            child: const HomeScreen(),
-          ),
-        ),
-      ),
+          );
+        }
+
+        if (settings.name == SettingsPage.path) {
+          return MaterialPageRoute(
+            builder: (context) {
+              return const SettingsPage();
+            },
+          );
+        }
+
+        return MaterialPageRoute(
+          builder: (_) => const NotFoundPage(),
+        );
+      },
     );
   }
 }

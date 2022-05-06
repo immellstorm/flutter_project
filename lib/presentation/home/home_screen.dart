@@ -7,6 +7,8 @@ import 'package:flutter_project/presentation/home/bloc/home_bloc.dart';
 import 'package:flutter_project/presentation/home/bloc/home_event.dart';
 import 'package:flutter_project/presentation/home/bloc/home_state.dart';
 import 'package:flutter_project/presentation/home/movie_card.dart';
+import 'package:flutter_project/presentation/settings/pages/settings_page.dart';
+import 'package:collection/collection.dart';
 
 class HomeScreen extends StatefulWidget {
   static final GlobalKey<State<StatefulWidget>> globalKey = GlobalKey();
@@ -31,6 +33,19 @@ class _HomeScreenState extends State<HomeScreen> {
     return SafeArea(
       key: HomeScreen.globalKey,
       child: Scaffold(
+        appBar: AppBar(
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(Icons.settings),
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  SettingsPage.path,
+                );
+              },
+            ),
+          ],
+        ),
         resizeToAvoidBottomInset: true,
         backgroundColor: MovieColors.backgroundBlackColor,
         body: RefreshIndicator(
@@ -56,21 +71,53 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               BlocBuilder<HomeBloc, HomeState>(
                 buildWhen: (oldState, newState) =>
-                    oldState.data != newState.data,
+                    oldState.data != newState.data ||
+                    // добавим что список будет перерисовывать при изменении
+                    // списка избранных
+                    oldState.favouritesMovies != newState.favouritesMovies,
                 builder: (context, state) {
                   return FutureBuilder<HomeModel?>(
                     future: state.data,
                     builder:
                         (BuildContext context, AsyncSnapshot<HomeModel?> data) {
                       return data.connectionState != ConnectionState.done
-                          ? const Center(child: CircularProgressIndicator())
+                          ? const Center(
+                              child: CircularProgressIndicator(),
+                            )
                           : data.hasData
                               ? data.data?.results?.isNotEmpty == true
                                   ? Expanded(
                                       child: ListView.builder(
                                         itemBuilder:
                                             (BuildContext context, int index) {
+                                          // проверяем есть ли элемент в избранном
+                                          bool isFavourite = false;
+                                          if (state.favouritesMovies
+                                                  ?.isNotEmpty ==
+                                              true) {
+                                            var moviesFavourite = state
+                                                .favouritesMovies
+                                                ?.firstWhereOrNull((element) =>
+                                                    element.id ==
+                                                    data.data?.results?[index]
+                                                        .id);
+                                            if (moviesFavourite != null) {
+                                              isFavourite = true;
+                                            }
+                                          }
+
                                           return MovieCard(
+                                            textButton: isFavourite
+                                                ? MovieLocal.deleteFavourites
+                                                : MovieLocal.addFavourites,
+                                            onClickFavoriteButton: () {
+                                              context.read<HomeBloc>().add(
+                                                    ChangedFavourites(
+                                                      model: data.data
+                                                          ?.results?[index],
+                                                    ),
+                                                  );
+                                            },
                                             movieCardModel:
                                                 data.data?.results?[index],
                                             key: ValueKey<int>(
