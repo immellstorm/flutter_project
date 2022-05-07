@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_project/components/constants.dart';
 import 'package:flutter_project/components/widgets/primary_button.dart';
 import 'package:flutter_project/domain/models/movie_cart_models.dart';

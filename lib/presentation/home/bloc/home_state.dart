@@ -5,8 +5,6 @@ import 'package:flutter_project/domain/models/movie_cart_models.dart';
 class HomeState extends Equatable {
   final String? search;
   final Future<HomeModel?>? data;
-
-  // добавляем список избранных
   final List<MovieCardModel>? favouritesMovies;
 
   const HomeState({
