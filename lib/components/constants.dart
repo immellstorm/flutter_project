@@ -18,6 +18,8 @@ class MovieLocal {
   static const String search = 'Search';
   static const String addFavourites = 'In wishlist';
   static const String deleteFavourites = 'Out wishlist';
+  static const String movies = 'Movies';
+  static const String wishlist = 'Wishlist';
 }
 
 class MovieColors {

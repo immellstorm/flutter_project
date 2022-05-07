@@ -10,16 +10,14 @@ import 'package:flutter_project/presentation/home/movie_card.dart';
 import 'package:flutter_project/presentation/settings/pages/settings_page.dart';
 import 'package:collection/collection.dart';
 
-class HomeScreen extends StatefulWidget {
-  static final GlobalKey<State<StatefulWidget>> globalKey = GlobalKey();
-
-  const HomeScreen({Key? key}) : super(key: key);
+class WishlistPage extends StatefulWidget {
+  const WishlistPage({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<WishlistPage> createState() => _WishlistPageState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _WishlistPageState extends State<WishlistPage> {
   final TextEditingController textController = TextEditingController();
 
   @override
@@ -35,7 +33,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      key: HomeScreen.globalKey,
       child: Scaffold(
         appBar: AppBar(
           actions: <Widget>[
@@ -92,6 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       child: ListView.builder(
                                         itemBuilder:
                                             (BuildContext context, int index) {
+                                          // проверяем есть ли элемент в избранном
                                           bool isFavourite = false;
                                           if (state.favouritesMovies
                                                   ?.isNotEmpty ==
