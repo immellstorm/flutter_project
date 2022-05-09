@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_project/components/constants.dart';
-import 'package:flutter_project/components/delayed_action.dart';
+import 'package:flutter_project/domain/models/home_model.dart';
 import 'package:flutter_project/presentation/home/bloc/home_bloc.dart';
 import 'package:flutter_project/presentation/home/bloc/home_event.dart';
 import 'package:flutter_project/presentation/home/bloc/home_state.dart';
@@ -58,26 +58,47 @@ class _WishlistPageState extends State<WishlistPage> {
                     oldState.data != newState.data ||
                     oldState.favouritesMovies != newState.favouritesMovies,
                 builder: (context, state) {
-                  return Expanded(
-                    child: ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemCount: state.favouritesMovies!.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return MovieCard(
-                          textButton: MovieLocal.deleteFavourites,
-                          onClickFavoriteButton: () {
-                            context.read<HomeBloc>().add(
-                                  ChangedFavourites(
-                                    model: state.favouritesMovies![index],
-                                  ),
-                                );
-                          },
-                          movieCardModel: state.favouritesMovies![index],
-                          key: ValueKey<int>(state.favouritesMovies![index].id),
-                        );
-                      },
-                    ),
+                  return FutureBuilder<HomeModel?>(
+                    future: state.data,
+                    builder:
+                        (BuildContext context, AsyncSnapshot<HomeModel?> data) {
+                      return data.connectionState != ConnectionState.done
+                          ? const Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : data.hasData
+                              ? data.data?.results?.isNotEmpty == true
+                                  ? Expanded(
+                                      child: ListView.builder(
+                                        scrollDirection: Axis.vertical,
+                                        shrinkWrap: true,
+                                        itemCount:
+                                            state.favouritesMovies!.length,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          return MovieCard(
+                                            textButton:
+                                                MovieLocal.deleteFavourites,
+                                            onClickFavoriteButton: () {
+                                              context.read<HomeBloc>().add(
+                                                    ChangedFavourites(
+                                                      model: state
+                                                              .favouritesMovies![
+                                                          index],
+                                                    ),
+                                                  );
+                                            },
+                                            movieCardModel:
+                                                state.favouritesMovies![index],
+                                            key: ValueKey<int>(state
+                                                .favouritesMovies![index].id),
+                                          );
+                                        },
+                                      ),
+                                    )
+                                  : const _Empty()
+                              : const _Error();
+                    },
                   );
                 },
               ),

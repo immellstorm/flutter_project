@@ -69,12 +69,9 @@ class MovieCard extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.all(8),
-            child:
-                // Html(data: movieCardModel?.description ?? ''),
-                PrimaryButton(
+            child: PrimaryButton(
               textButton,
               onPressed: () {
-                //Вызываем функци обратного вызова
                 onClickFavoriteButton?.call();
               },
             ),

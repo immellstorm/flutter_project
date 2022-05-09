@@ -6,7 +6,7 @@ import 'package:flutter_project/error_bloc/error_bloc.dart';
 import 'package:flutter_project/error_bloc/error_event.dart';
 import 'package:flutter_project/presentation/home/bloc/home_bloc.dart';
 import 'package:flutter_project/presentation/home/home_screen.dart';
-import 'package:flutter_project/presentation/home/wishlist_page.dart';
+import 'package:flutter_project/presentation/wishlist/wishlist_page.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
