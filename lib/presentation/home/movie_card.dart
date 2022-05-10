@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project/components/constants.dart';
+import 'package:flutter_project/components/locals/locals.dart';
 import 'package:flutter_project/components/widgets/primary_button.dart';
 import 'package:flutter_project/domain/models/movie_cart_models.dart';
 
@@ -64,7 +65,7 @@ class MovieCard extends StatelessWidget {
             ),
           ),
           Text(
-            _rating(movieCardModel?.voteAverage ?? 0),
+            _rating(context, movieCardModel?.voteAverage ?? 0),
             style: Theme.of(context).textTheme.subtitle1,
           ),
           Padding(
@@ -81,9 +82,9 @@ class MovieCard extends StatelessWidget {
     );
   }
 
-  String _rating(double voteAverage) {
-    const prefix = MovieLocal.ratingPrefix;
-    const suffix = MovieLocal.ratingSuffix;
+  String _rating(BuildContext context, double voteAverage) {
+    final prefix = context.locale.ratingPrefix;
+    final suffix = context.locale.ratingSuffix;
     final rating = (voteAverage * 10).toInt();
     return '$prefix $rating $suffix';
   }

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "815958987757",
+    "project_id": "madness-flutter",
+    "storage_bucket": "madness-flutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:815958987757:android:1e2c7d80c01c3b4bd70de4",
+        "android_client_info": {
+          "package_name": "ru.madbrains.flutter_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "815958987757-6onp4p6jeultmnqpf1u7l1pba7fu74ac.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8eO9qdqhM6ZSlwlzI1Pb1J1UJXrjok2E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "815958987757-6onp4p6jeultmnqpf1u7l1pba7fu74ac.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

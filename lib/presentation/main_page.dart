@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_project/components/constants.dart';
 import 'package:flutter_project/data/repositories/movies_repository.dart';
 import 'package:flutter_project/error_bloc/error_bloc.dart';
 import 'package:flutter_project/error_bloc/error_event.dart';
@@ -15,12 +14,12 @@ class MainPage extends StatefulWidget {
   static const List<_Tab> _tabs = <_Tab>[
     _Tab(
       icon: Icon(Icons.movie_filter),
-      label: MovieLocal.movies,
+      label: 'Movies', //context.locale.movies,
       page: HomeScreen(),
     ),
     _Tab(
       icon: Icon(Icons.favorite),
-      label: MovieLocal.wishlist,
+      label: 'Wishlist', //context.locale.wishlist,
       page: WishlistPage(),
     ),
   ];

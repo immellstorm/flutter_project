@@ -10,18 +10,6 @@ class MovieQuery {
   static const String initialQ = 'bad';
 }
 
-class MovieLocal {
-  static const String error = 'Error';
-  static const String unknown = 'Unknown';
-  static const String ratingPrefix = 'Grade: ';
-  static const String ratingSuffix = '/ 10';
-  static const String search = 'Search';
-  static const String addFavourites = 'Add in wishlist';
-  static const String deleteFavourites = 'Delete from wishlist';
-  static const String movies = 'Movies';
-  static const String wishlist = 'Wishlist';
-}
-
 class MovieColors {
   static const Color greenColor = Color.fromRGBO(54, 164, 94, 1);
   static const Color greyColor = Color.fromRGBO(84, 84, 84, 1);

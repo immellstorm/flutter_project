@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_project/components/constants.dart';
 import 'package:flutter_project/components/delayed_action.dart';
+import 'package:flutter_project/components/locals/locals.dart';
 import 'package:flutter_project/domain/models/home_model.dart';
+import 'package:flutter_project/locale_bloc/locale_bloc.dart';
+import 'package:flutter_project/locale_bloc/locale_event.dart';
 import 'package:flutter_project/presentation/home/bloc/home_bloc.dart';
 import 'package:flutter_project/presentation/home/bloc/home_event.dart';
 import 'package:flutter_project/presentation/home/bloc/home_state.dart';
@@ -21,6 +24,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController textController = TextEditingController();
+  bool isEnLocale = false;
 
   @override
   void didChangeDependencies() {
@@ -37,6 +41,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return SafeArea(
       key: HomeScreen.globalKey,
       child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        backgroundColor: MovieColors.greyColor,
         appBar: AppBar(
           actions: <Widget>[
             IconButton(
@@ -50,8 +56,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
-        resizeToAvoidBottomInset: true,
-        backgroundColor: MovieColors.backgroundBlackColor,
         body: RefreshIndicator(
           onRefresh: () async {
             setState(() {
@@ -61,12 +65,38 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             children: [
               Padding(
+                padding: const EdgeInsets.only(left: 10.0),
+                child: Row(
+                  children: [
+                    Checkbox(
+                      value: isEnLocale,
+                      onChanged: (val) {
+                        isEnLocale = val ?? false;
+                        context.read<LocaleBloc>().add(ChangeLocaleEvent(
+                            isEnLocale
+                                ? availableLocales[enLocale]!
+                                : availableLocales[ruLocale]!));
+                      },
+                    ),
+                    Flexible(
+                      child: Text(
+                        context.locale.switchLanguage,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline5!
+                            .copyWith(color: Colors.white),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
                 padding: const EdgeInsets.only(left: 10, right: 10, bottom: 20),
                 child: TextField(
                   controller: textController,
                   maxLines: 1,
-                  decoration: const InputDecoration(
-                    labelText: MovieLocal.search,
+                  decoration: InputDecoration(
+                    labelText: context.locale.search,
                     filled: true,
                     fillColor: Colors.white,
                   ),
@@ -109,8 +139,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
                                           return MovieCard(
                                             textButton: isFavourite
-                                                ? MovieLocal.deleteFavourites
-                                                : MovieLocal.addFavourites,
+                                                ? context
+                                                    .locale.deleteFavourites
+                                                : context.locale.addFavourites,
                                             onClickFavoriteButton: () {
                                               context.read<HomeBloc>().add(
                                                     ChangedFavourites(

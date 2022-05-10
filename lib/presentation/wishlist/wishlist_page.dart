@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_project/components/constants.dart';
+import 'package:flutter_project/components/locals/locals.dart';
 import 'package:flutter_project/domain/models/home_model.dart';
 import 'package:flutter_project/presentation/home/bloc/home_bloc.dart';
 import 'package:flutter_project/presentation/home/bloc/home_event.dart';
@@ -78,7 +79,7 @@ class _WishlistPageState extends State<WishlistPage> {
                                             (BuildContext context, int index) {
                                           return MovieCard(
                                             textButton:
-                                                MovieLocal.deleteFavourites,
+                                                context.locale.deleteFavourites,
                                             onClickFavoriteButton: () {
                                               context.read<HomeBloc>().add(
                                                     ChangedFavourites(
