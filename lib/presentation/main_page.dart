@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_project/components/locals/locals.dart';
 import 'package:flutter_project/data/repositories/movies_repository.dart';
 import 'package:flutter_project/error_bloc/error_bloc.dart';
 import 'package:flutter_project/error_bloc/error_event.dart';
@@ -11,18 +12,6 @@ class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
 
   static const path = '/';
-  static const List<_Tab> _tabs = <_Tab>[
-    _Tab(
-      icon: Icon(Icons.movie_filter),
-      label: 'Movies', //context.locale.movies,
-      page: HomeScreen(),
-    ),
-    _Tab(
-      icon: Icon(Icons.favorite),
-      label: 'Wishlist', //context.locale.wishlist,
-      page: WishlistPage(),
-    ),
-  ];
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -39,6 +28,18 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    List<_Tab> _tabs = <_Tab>[
+      _Tab(
+        icon: const Icon(Icons.movie_filter),
+        label: context.locale.movies,
+        page: const HomeScreen(),
+      ),
+      _Tab(
+        icon: const Icon(Icons.favorite),
+        label: context.locale.wishlist,
+        page: const WishlistPage(),
+      ),
+    ];
     return BlocProvider<ErrorBloc>(
       lazy: false,
       create: (_) => ErrorBloc(),
@@ -56,12 +57,12 @@ class _MainPageState extends State<MainPage> {
             create: (BuildContext context) =>
                 HomeBloc(context.read<MoviesRepository>()),
             child: Scaffold(
-              body: MainPage._tabs.elementAt(_selectedIndex).page,
+              body: _tabs.elementAt(_selectedIndex).page,
               bottomNavigationBar: BottomNavigationBar(
                 items: List.generate(
-                  MainPage._tabs.length,
+                  _tabs.length,
                   (index) {
-                    final _Tab tab = MainPage._tabs[index];
+                    final _Tab tab = _tabs[index];
                     return BottomNavigationBarItem(
                       icon: tab.icon,
                       label: tab.label,

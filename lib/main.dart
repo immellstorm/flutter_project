@@ -11,7 +11,6 @@ import 'package:flutter_project/components/widgets/not_found_page.dart';
 import 'package:flutter_project/presentation/settings/pages/settings_page.dart';
 
 void main() async {
-  /// Преинициализация перед инициализацией Firebase
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp();
