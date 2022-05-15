@@ -34,6 +34,10 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'Movies',
+            theme: ThemeData(
+              primarySwatch: Colors.deepOrange,
+              fontFamily: 'ChakraPetch-Medium',
+            ),
             locale: state.locale,
             localizationsDelegates: <LocalizationsDelegate<dynamic>>[
               GlobalWidgetsLocalizations.delegate,

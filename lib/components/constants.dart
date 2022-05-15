@@ -11,7 +11,6 @@ class MovieQuery {
 }
 
 class MovieColors {
-  static const Color greenColor = Color.fromRGBO(54, 164, 94, 1);
   static const Color greyColor = Color.fromRGBO(84, 84, 84, 1);
   static const Color cardBlackColor = Color.fromRGBO(28, 28, 28, 1.0);
   static const Color backgroundBlackColor = Color.fromRGBO(16, 16, 16, 1.0);

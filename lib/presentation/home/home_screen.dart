@@ -44,6 +44,19 @@ class _HomeScreenState extends State<HomeScreen> {
         resizeToAvoidBottomInset: true,
         backgroundColor: MovieColors.greyColor,
         appBar: AppBar(
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Image.asset(
+                'assets/mad.png',
+                fit: BoxFit.contain,
+                height: 32,
+              ),
+              Container(
+                  padding: const EdgeInsets.all(8.0),
+                  child: const Text('Movies')),
+            ],
+          ),
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.settings),
@@ -67,6 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.only(left: 10.0),
                 child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Checkbox(
                       value: isEnLocale,
@@ -83,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         context.locale.switchLanguage,
                         style: Theme.of(context)
                             .textTheme
-                            .headline5!
+                            .headline6!
                             .copyWith(color: Colors.white),
                       ),
                     ),

@@ -40,23 +40,54 @@ class _SettingsPageState extends State<SettingsPageContent> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             BlocBuilder<SettingBloc, SettingState>(
                 buildWhen: (oldState, newState) =>
                     oldState.name != newState.name,
                 builder: (context2, state) {
-                  return Text(state.name ?? '');
+                  return Text(
+                    state.name ?? '',
+                    style: const TextStyle(
+                      color: Colors.deepOrange,
+                      fontSize: 20,
+                    ),
+                  );
                 }),
-            PrimaryButton('Получить имя', onPressed: () {
-              context.read<SettingBloc>().add(LoadNameEvent());
-            }),
-            PrimaryButton('Сохранить имя',
-                onPressed: () => context
-                    .read<SettingBloc>()
-                    .add(const SaveNameEvent(name: 'Андрей'))),
-            PrimaryButton('Очистить имя',
-                onPressed: () =>
-                    context.read<SettingBloc>().add(ClearNameEvent())),
+            Container(
+              margin: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  PrimaryButton('Получить имя', onPressed: () {
+                    context.read<SettingBloc>().add(LoadNameEvent());
+                  })
+                ],
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  PrimaryButton('Сохранить имя',
+                      onPressed: () => context
+                          .read<SettingBloc>()
+                          .add(const SaveNameEvent(name: 'Mad Brains')))
+                ],
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  PrimaryButton('Очистить имя',
+                      onPressed: () =>
+                          context.read<SettingBloc>().add(ClearNameEvent()))
+                ],
+              ),
+            ),
             ElevatedButton(
               onPressed: () {
                 SystemChannels.platform.invokeMethod('SystemNavigator.pop');

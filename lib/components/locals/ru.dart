@@ -30,4 +30,13 @@ class LocaleRu implements LocaleBase {
 
   @override
   String get wishlist => 'Избранное';
+
+  @override
+  String get bad => 'Плохо';
+
+  @override
+  String get good => 'Хорошо';
+
+  @override
+  String get excellent => 'Отлично';
 }

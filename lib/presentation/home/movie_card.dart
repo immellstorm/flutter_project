@@ -5,7 +5,7 @@ import 'package:flutter_project/components/locals/locals.dart';
 import 'package:flutter_project/components/widgets/primary_button.dart';
 import 'package:flutter_project/domain/models/movie_cart_models.dart';
 
-class MovieCard extends StatelessWidget {
+class MovieCard extends StatelessWidget with GradeConversion {
   final MovieCardModel? movieCardModel;
   final VoidCallback? onClickFavoriteButton;
   final String textButton;
@@ -86,6 +86,61 @@ class MovieCard extends StatelessWidget {
     final prefix = context.locale.ratingPrefix;
     final suffix = context.locale.ratingSuffix;
     final rating = (voteAverage * 10).toInt();
-    return '$prefix $rating $suffix';
+    String grade = '';
+    String gradeLocale = '';
+    Grade gradeEnum = enumFromString(rating);
+    grade = gradeEnum.toGradeString();
+
+    if (grade == 'Bad') {
+      gradeLocale = context.locale.bad;
+    } else if (grade == 'Good') {
+      gradeLocale = context.locale.good;
+    } else {
+      gradeLocale = context.locale.excellent;
+    }
+
+    return '$prefix $rating $suffix $gradeLocale';
+  }
+}
+
+enum Grade { Bad, Good, Excellent }
+
+extension GradeParsing on Grade {
+  String toGradeString() {
+    switch (this) {
+      case Grade.Bad:
+        return 'Bad';
+      case Grade.Good:
+        return 'Good';
+      case Grade.Excellent:
+        return 'Excellent';
+    }
+  }
+}
+
+mixin GradeConversion {
+  enumFromString(int rating) {
+    switch (rating) {
+      case 1:
+        return Grade.Bad;
+      case 2:
+        return Grade.Bad;
+      case 3:
+        return Grade.Bad;
+      case 4:
+        return Grade.Bad;
+      case 5:
+        return Grade.Good;
+      case 6:
+        return Grade.Good;
+      case 7:
+        return Grade.Good;
+      case 8:
+        return Grade.Excellent;
+      case 9:
+        return Grade.Excellent;
+      case 10:
+        return Grade.Excellent;
+    }
   }
 }

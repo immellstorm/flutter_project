@@ -31,7 +31,22 @@ class _WishlistPageState extends State<WishlistPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        backgroundColor: MovieColors.greyColor,
         appBar: AppBar(
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Image.asset(
+                'assets/mad.png',
+                fit: BoxFit.contain,
+                height: 32,
+              ),
+              Container(
+                  padding: const EdgeInsets.all(8.0),
+                  child: const Text('Movies')),
+            ],
+          ),
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.settings),
@@ -44,8 +59,6 @@ class _WishlistPageState extends State<WishlistPage> {
             ),
           ],
         ),
-        resizeToAvoidBottomInset: true,
-        backgroundColor: MovieColors.backgroundBlackColor,
         body: RefreshIndicator(
           onRefresh: () async {
             setState(() {

@@ -30,4 +30,13 @@ class LocaleEn implements LocaleBase {
 
   @override
   String get wishlist => ' Wishlist';
+
+  @override
+  String get bad => ' Bad';
+
+  @override
+  String get good => 'Good';
+
+  @override
+  String get excellent => 'Excellent';
 }

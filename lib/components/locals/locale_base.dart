@@ -18,4 +18,10 @@ abstract class LocaleBase {
   String get movies;
 
   String get wishlist;
+
+  String get bad;
+
+  String get good;
+
+  String get excellent;
 }
