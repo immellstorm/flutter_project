@@ -39,4 +39,22 @@ class LocaleRu implements LocaleBase {
 
   @override
   String get excellent => 'Отлично';
+
+  @override
+  String get settings => 'Настройки';
+
+  @override
+  String get back => 'Назад';
+
+  @override
+  String get exit => 'Выход';
+
+  @override
+  String get getName => 'Получить имя';
+
+  @override
+  String get saveName => 'Сохранить имя';
+
+  @override
+  String get clearName => 'Очистить имя';
 }

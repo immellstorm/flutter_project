@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_project/components/locals/locals.dart';
 import 'package:flutter_project/components/widgets/primary_button.dart';
 import 'package:flutter_project/presentation/settings/bloc/setting_bloc.dart';
 import 'package:flutter_project/presentation/settings/bloc/setting_event.dart';
@@ -35,7 +36,7 @@ class _SettingsPageState extends State<SettingsPageContent> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings'),
+        title: Text(context.locale.settings),
       ),
       body: Center(
         child: Column(
@@ -45,7 +46,7 @@ class _SettingsPageState extends State<SettingsPageContent> {
             BlocBuilder<SettingBloc, SettingState>(
                 buildWhen: (oldState, newState) =>
                     oldState.name != newState.name,
-                builder: (context2, state) {
+                builder: (context, state) {
                   return Text(
                     state.name ?? '',
                     style: const TextStyle(
@@ -59,7 +60,7 @@ class _SettingsPageState extends State<SettingsPageContent> {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  PrimaryButton('Получить имя', onPressed: () {
+                  PrimaryButton(context.locale.getName, onPressed: () {
                     context.read<SettingBloc>().add(LoadNameEvent());
                   })
                 ],
@@ -70,7 +71,7 @@ class _SettingsPageState extends State<SettingsPageContent> {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  PrimaryButton('Сохранить имя',
+                  PrimaryButton(context.locale.saveName,
                       onPressed: () => context
                           .read<SettingBloc>()
                           .add(const SaveNameEvent(name: 'Mad Brains')))
@@ -82,7 +83,7 @@ class _SettingsPageState extends State<SettingsPageContent> {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  PrimaryButton('Очистить имя',
+                  PrimaryButton(context.locale.clearName,
                       onPressed: () =>
                           context.read<SettingBloc>().add(ClearNameEvent()))
                 ],
@@ -94,9 +95,9 @@ class _SettingsPageState extends State<SettingsPageContent> {
               },
               child: Row(
                 mainAxisSize: MainAxisSize.min,
-                children: const <Widget>[
-                  Icon(Icons.exit_to_app),
-                  Text('Exit'),
+                children: <Widget>[
+                  const Icon(Icons.exit_to_app),
+                  Text(context.locale.exit),
                 ],
               ),
             ),
@@ -106,9 +107,9 @@ class _SettingsPageState extends State<SettingsPageContent> {
               },
               child: Row(
                 mainAxisSize: MainAxisSize.min,
-                children: const <Widget>[
-                  Icon(Icons.arrow_back),
-                  Text('Back'),
+                children: <Widget>[
+                  const Icon(Icons.arrow_back),
+                  Text(context.locale.back),
                 ],
               ),
             ),

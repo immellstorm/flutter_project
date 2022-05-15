@@ -24,4 +24,16 @@ abstract class LocaleBase {
   String get good;
 
   String get excellent;
+
+  String get settings;
+
+  String get back;
+
+  String get exit;
+
+  String get getName;
+
+  String get saveName;
+
+  String get clearName;
 }

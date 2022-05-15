@@ -39,4 +39,22 @@ class LocaleEn implements LocaleBase {
 
   @override
   String get excellent => 'Excellent';
+
+  @override
+  String get settings => 'Settings';
+
+  @override
+  String get back => 'Back';
+
+  @override
+  String get exit => 'Exit';
+
+  @override
+  String get getName => 'Get name';
+
+  @override
+  String get saveName => 'Save name';
+
+  @override
+  String get clearName => 'Clear name';
 }
