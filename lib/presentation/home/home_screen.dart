@@ -24,7 +24,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController textController = TextEditingController();
-  bool isEnLocale = false;
 
   @override
   void didChangeDependencies() {
@@ -82,14 +81,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Checkbox(
-                      value: isEnLocale,
-                      onChanged: (val) {
-                        isEnLocale = val ?? false;
-                        context.read<LocaleBloc>().add(ChangeLocaleEvent(
-                            isEnLocale
-                                ? availableLocales[enLocale]!
-                                : availableLocales[ruLocale]!));
+                    BlocBuilder<HomeBloc, HomeState>(
+                      builder: (context, state) {
+                        return Checkbox(
+                          value: state.isEnLocale,
+                          onChanged: (val) {
+                            setState(() {
+                              state.isEnLocale = val ?? false;
+                              context.read<LocaleBloc>().add(ChangeLocaleEvent(
+                                  state.isEnLocale
+                                      ? availableLocales[enLocale]!
+                                      : availableLocales[ruLocale]!));
+                            });
+                          },
+                        );
                       },
                     ),
                     Flexible(

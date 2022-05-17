@@ -24,7 +24,7 @@ class MovieCard extends StatelessWidget with GradeConversion {
       margin: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: Colors.white54,
-        borderRadius: const BorderRadius.all(Radius.circular(25)),
+        borderRadius: const BorderRadius.all(Radius.circular(5)),
         boxShadow: <BoxShadow>[
           BoxShadow(
             color: Colors.black54.withOpacity(0.3),
@@ -38,7 +38,7 @@ class MovieCard extends StatelessWidget with GradeConversion {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           ClipRRect(
-            borderRadius: const BorderRadius.all(Radius.circular(25)),
+            borderRadius: const BorderRadius.all(Radius.circular(5)),
             child: Container(
               height: 300,
               width: double.infinity,
@@ -120,27 +120,12 @@ extension GradeParsing on Grade {
 
 mixin GradeConversion {
   enumFromString(int rating) {
-    switch (rating) {
-      case 1:
-        return Grade.Bad;
-      case 2:
-        return Grade.Bad;
-      case 3:
-        return Grade.Bad;
-      case 4:
-        return Grade.Bad;
-      case 5:
-        return Grade.Good;
-      case 6:
-        return Grade.Good;
-      case 7:
-        return Grade.Good;
-      case 8:
-        return Grade.Excellent;
-      case 9:
-        return Grade.Excellent;
-      case 10:
-        return Grade.Excellent;
+    if (rating <= 4) {
+      return Grade.Bad;
+    } else if (rating > 7) {
+      return Grade.Excellent;
+    } else {
+      return Grade.Good;
     }
   }
 }

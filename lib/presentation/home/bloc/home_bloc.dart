@@ -9,7 +9,7 @@ import 'package:collection/collection.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final MoviesRepository repository;
 
-  HomeBloc(this.repository) : super(const HomeState()) {
+  HomeBloc(this.repository) : super(HomeState(isEnLocale: false)) {
     on<LoadDataEvent>(_onLoadData);
     on<SearchChangedEvent>(_onSearchChanged);
     on<ChangedFavourites>(_onClickFavourites);
