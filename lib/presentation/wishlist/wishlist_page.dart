@@ -81,7 +81,8 @@ class _WishlistPageState extends State<WishlistPage> {
                               child: CircularProgressIndicator(),
                             )
                           : data.hasData
-                              ? data.data?.results?.isNotEmpty == true
+                              //? data.data?.results?.isNotEmpty == true
+                              ? state.favouritesMovies?.isNotEmpty == true
                                   ? Expanded(
                                       child: ListView.builder(
                                         scrollDirection: Axis.vertical,
