@@ -7,12 +7,14 @@ class HomeState extends Equatable {
   final Future<HomeModel?>? data;
   final List<MovieCardModel>? favouritesMovies;
   bool isEnLocale = false;
+  final String? text;
 
   HomeState({
     this.search,
     this.data,
     this.favouritesMovies,
     required this.isEnLocale,
+    this.text,
   });
 
   HomeState copyWith({
@@ -20,12 +22,14 @@ class HomeState extends Equatable {
     Future<HomeModel?>? data,
     List<MovieCardModel>? favouritesMovies,
     bool? isEnLocale,
+    String? text,
   }) =>
       HomeState(
           search: search ?? this.search,
           data: data ?? this.data,
           favouritesMovies: favouritesMovies ?? this.favouritesMovies,
-          isEnLocale: isEnLocale ?? this.isEnLocale);
+          isEnLocale: isEnLocale ?? this.isEnLocale,
+          text: text ?? this.text);
 
   @override
   List<Object> get props => [
@@ -33,5 +37,6 @@ class HomeState extends Equatable {
         data ?? 0,
         favouritesMovies ?? [],
         isEnLocale,
+        text ?? 0,
       ];
 }

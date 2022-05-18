@@ -23,7 +23,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final TextEditingController textController = TextEditingController();
+  final TextEditingController _textController = TextEditingController();
 
   @override
   void didChangeDependencies() {
@@ -111,16 +111,22 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 10, right: 10, bottom: 20),
-                child: TextField(
-                  controller: textController,
-                  maxLines: 1,
-                  decoration: InputDecoration(
-                    labelText: context.locale.search,
-                    filled: true,
-                    fillColor: Colors.white,
-                  ),
-                  onChanged: _onSearchFieldTextChanged,
-                ),
+                child:
+                    BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
+                  _textController.text = state.text ?? '';
+                  return TextField(
+                    controller: _textController,
+                    maxLines: 1,
+                    decoration: InputDecoration(
+                      labelText: context.locale.search,
+                      filled: true,
+                      fillColor: Colors.white,
+                    ),
+                    onChanged: (text) {
+                      _onSearchFieldTextChanged(text);
+                    },
+                  );
+                }),
               ),
               BlocBuilder<HomeBloc, HomeState>(
                 buildWhen: (oldState, newState) =>
@@ -195,7 +201,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _onSearchFieldTextChanged(String text) {
     DelayedAction.run(() {
-      context.read<HomeBloc>().add(SearchChangedEvent(search: text));
+      context
+          .read<HomeBloc>()
+          .add(SearchChangedEvent(search: text, searchText: text));
     });
   }
 }

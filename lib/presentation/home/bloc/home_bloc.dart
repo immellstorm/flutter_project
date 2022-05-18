@@ -32,6 +32,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   void _onSearchChanged(SearchChangedEvent event, Emitter<HomeState> emit) {
     emit(state.copyWith(search: event.search));
     emit(state.copyWith(data: repository.loadData(q: search)));
+    emit(state.copyWith(text: event.searchText));
   }
 
   void _onLoadData(LoadDataEvent event, Emitter<HomeState> emit) {

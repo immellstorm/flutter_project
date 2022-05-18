@@ -10,11 +10,12 @@ abstract class HomeEvent extends Equatable {
 
 class SearchChangedEvent extends HomeEvent {
   final String search;
+  final String searchText;
 
-  const SearchChangedEvent({required this.search});
+  const SearchChangedEvent({required this.search, required this.searchText});
 
   @override
-  List<Object> get props => [search];
+  List<Object> get props => [search, searchText];
 }
 
 class LoadDataEvent extends HomeEvent {}
