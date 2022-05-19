@@ -1,6 +1,6 @@
 # flutter_project
 
-A new Flutter project for Task 1.
+A new Flutter project.
 
 ## Getting Started
 
