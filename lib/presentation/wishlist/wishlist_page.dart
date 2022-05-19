@@ -138,6 +138,6 @@ class _Empty extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.network(MovieQuery.nothingImageUrl, fit: BoxFit.cover);
+    return Image.network(MovieQuery.emptyWishlist, fit: BoxFit.cover);
   }
 }

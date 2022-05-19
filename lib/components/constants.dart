@@ -6,6 +6,8 @@ class MovieQuery {
   static const String pisecImageUrl = 'https://a.d-cd.net/KiAAAgCig-A-960.jpg';
   static const String nothingImageUrl =
       'https://venturebeat.com/wp-content/uploads/2014/07/imgur-search.png?fit=400%2C236&strip=all';
+  static const String emptyWishlist =
+      'https://media.makeameme.org/created/my-wishlist-2f43ea05d6.jpg';
 
   static const String initialQ = 'bad';
 }
