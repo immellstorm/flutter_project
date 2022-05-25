@@ -36,4 +36,8 @@ abstract class LocaleBase {
   String get saveName;
 
   String get clearName;
+
+  String get description;
+
+  String get relaseData;
 }

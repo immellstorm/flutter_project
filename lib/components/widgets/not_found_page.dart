@@ -13,7 +13,7 @@ class NotFoundPage extends StatelessWidget {
             Text(
               'Not found page',
               style: TextStyle(
-                color: Colors.deepPurple,
+                color: Colors.deepOrange,
                 fontSize: 26,
               ),
             ),

@@ -57,4 +57,10 @@ class LocaleEn implements LocaleBase {
 
   @override
   String get clearName => 'Clear name';
+
+  @override
+  String get description => 'Description';
+
+  @override
+  String get relaseData => 'Relase data';
 }

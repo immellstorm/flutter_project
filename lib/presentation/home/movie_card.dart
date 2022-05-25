@@ -4,6 +4,7 @@ import 'package:flutter_project/components/constants.dart';
 import 'package:flutter_project/components/locals/locals.dart';
 import 'package:flutter_project/components/widgets/primary_button.dart';
 import 'package:flutter_project/domain/models/movie_cart_models.dart';
+import 'package:flutter_project/presentation/description/page/description_page.dart';
 
 class MovieCard extends StatelessWidget with GradeConversion {
   final MovieCardModel? movieCardModel;
@@ -76,6 +77,22 @@ class MovieCard extends StatelessWidget with GradeConversion {
                 onClickFavoriteButton?.call();
               },
             ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: PrimaryButton(context.locale.description, onPressed: () {
+              Navigator.pushNamed(
+                context,
+                '/description',
+                arguments: DescriptionArguments(
+                    movieCardModel!.id,
+                    movieCardModel!.title,
+                    movieCardModel!.picture,
+                    movieCardModel!.releaseDate,
+                    movieCardModel!.voteAverage,
+                    movieCardModel!.description),
+              );
+            }),
           )
         ],
       ),

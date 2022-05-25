@@ -57,4 +57,10 @@ class LocaleRu implements LocaleBase {
 
   @override
   String get clearName => 'Очистить имя';
+
+  @override
+  String get description => 'Описание';
+
+  @override
+  String get relaseData => 'Дата релиза';
 }

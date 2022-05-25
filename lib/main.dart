@@ -6,6 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_project/components/locals/locals.dart';
 import 'package:flutter_project/locale_bloc/locale_bloc.dart';
 import 'package:flutter_project/locale_bloc/locale_state.dart';
+import 'package:flutter_project/presentation/description/page/description_page.dart';
 import 'package:flutter_project/presentation/main_page.dart';
 import 'package:flutter_project/components/widgets/not_found_page.dart';
 import 'package:flutter_project/presentation/settings/pages/settings_page.dart';
@@ -60,6 +61,18 @@ class MyApp extends StatelessWidget {
                 return MaterialPageRoute(
                   builder: (context) {
                     return const SettingsPage();
+                  },
+                );
+              }
+
+              if (settings.name == DescriptionPage.path) {
+                final DescriptionArguments arguments =
+                    settings.arguments as DescriptionArguments;
+                return MaterialPageRoute(
+                  builder: (context) {
+                    return DescriptionPage(
+                      arguments: arguments,
+                    );
                   },
                 );
               }
