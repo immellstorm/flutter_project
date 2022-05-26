@@ -1,14 +1,16 @@
 import 'package:flutter_project/data/db/database.dart';
 
 class MovieCardModel {
-  const MovieCardModel({
-    required this.id,
-    required this.title,
-    this.picture,
-    this.releaseDate,
-    this.voteAverage,
-    this.description,
-  });
+  const MovieCardModel(
+      {required this.id,
+      required this.title,
+      this.picture,
+      this.releaseDate,
+      this.voteAverage,
+      this.description,
+      this.originLanguage,
+      this.officialSite,
+      this.ended});
 
   final int id;
   final String title;
@@ -16,6 +18,9 @@ class MovieCardModel {
   final String? releaseDate;
   final double? voteAverage;
   final String? description;
+  final String? originLanguage;
+  final String? officialSite;
+  final String? ended;
 }
 
 extension MovieCardModelToDatabase on MovieCardModel {
@@ -27,6 +32,9 @@ extension MovieCardModelToDatabase on MovieCardModel {
       releaseDate: releaseDate,
       voteAverage: voteAverage,
       description: description,
+      originLanguage: originLanguage,
+      officialSite: officialSite,
+      ended: ended,
     );
   }
 }
@@ -40,6 +48,9 @@ extension MovieTableDataToDomain on MovieTableData {
       releaseDate: releaseDate,
       voteAverage: voteAverage,
       description: description,
+      originLanguage: originLanguage,
+      officialSite: officialSite,
+      ended: ended,
     );
   }
 }

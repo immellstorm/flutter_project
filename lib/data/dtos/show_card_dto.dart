@@ -36,13 +36,24 @@ class ShowCardDataDTO {
   @JsonKey(name: 'summary')
   final String? description;
 
-  ShowCardDataDTO({
-    required this.id,
-    required this.title,
-    required this.picture,
-    this.releaseDate,
-    this.description,
-  });
+  @JsonKey(name: 'language')
+  final String? originLanguage;
+
+  @JsonKey(name: 'officialSite')
+  final String? officialSite;
+
+  @JsonKey(name: 'ended')
+  final String? ended;
+
+  ShowCardDataDTO(
+      {required this.id,
+      required this.title,
+      required this.picture,
+      this.releaseDate,
+      this.description,
+      this.originLanguage,
+      this.officialSite,
+      this.ended});
 
   factory ShowCardDataDTO.fromJson(Map<String, dynamic> json) =>
       _$ShowCardDataDTOFromJson(json);

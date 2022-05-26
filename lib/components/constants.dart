@@ -3,7 +3,8 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 class MovieQuery {
   static const String baseUrl = 'https://api.tvmaze.com/search/shows';
-  static const String pisecImageUrl = 'https://a.d-cd.net/KiAAAgCig-A-960.jpg';
+  static const String noImageUrl =
+      'https://www.nwoncologyindiana.com/wp-content/uploads/2020/04/no-img.png';
   static const String nothingImageUrl =
       'https://venturebeat.com/wp-content/uploads/2014/07/imgur-search.png?fit=400%2C236&strip=all';
   static const String emptyWishlist =

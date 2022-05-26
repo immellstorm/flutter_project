@@ -14,13 +14,19 @@ class MovieTableData extends DataClass implements Insertable<MovieTableData> {
   final double? voteAverage;
   final String? releaseDate;
   final String? description;
+  final String? originLanguage;
+  final String? officialSite;
+  final String? ended;
   MovieTableData(
       {required this.id,
       required this.title,
       this.picture,
       this.voteAverage,
       this.releaseDate,
-      this.description});
+      this.description,
+      this.originLanguage,
+      this.officialSite,
+      this.ended});
   factory MovieTableData.fromData(Map<String, dynamic> data, {String? prefix}) {
     final effectivePrefix = prefix ?? '';
     return MovieTableData(
@@ -36,6 +42,12 @@ class MovieTableData extends DataClass implements Insertable<MovieTableData> {
           .mapFromDatabaseResponse(data['${effectivePrefix}release_date']),
       description: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}description']),
+      originLanguage: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}origin_language']),
+      officialSite: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}official_site']),
+      ended: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}ended']),
     );
   }
   @override
@@ -54,6 +66,15 @@ class MovieTableData extends DataClass implements Insertable<MovieTableData> {
     }
     if (!nullToAbsent || description != null) {
       map['description'] = Variable<String?>(description);
+    }
+    if (!nullToAbsent || originLanguage != null) {
+      map['origin_language'] = Variable<String?>(originLanguage);
+    }
+    if (!nullToAbsent || officialSite != null) {
+      map['official_site'] = Variable<String?>(officialSite);
+    }
+    if (!nullToAbsent || ended != null) {
+      map['ended'] = Variable<String?>(ended);
     }
     return map;
   }
@@ -74,6 +95,14 @@ class MovieTableData extends DataClass implements Insertable<MovieTableData> {
       description: description == null && nullToAbsent
           ? const Value.absent()
           : Value(description),
+      originLanguage: originLanguage == null && nullToAbsent
+          ? const Value.absent()
+          : Value(originLanguage),
+      officialSite: officialSite == null && nullToAbsent
+          ? const Value.absent()
+          : Value(officialSite),
+      ended:
+          ended == null && nullToAbsent ? const Value.absent() : Value(ended),
     );
   }
 
@@ -87,6 +116,9 @@ class MovieTableData extends DataClass implements Insertable<MovieTableData> {
       voteAverage: serializer.fromJson<double?>(json['voteAverage']),
       releaseDate: serializer.fromJson<String?>(json['releaseDate']),
       description: serializer.fromJson<String?>(json['description']),
+      originLanguage: serializer.fromJson<String?>(json['originLanguage']),
+      officialSite: serializer.fromJson<String?>(json['officialSite']),
+      ended: serializer.fromJson<String?>(json['ended']),
     );
   }
   @override
@@ -99,6 +131,9 @@ class MovieTableData extends DataClass implements Insertable<MovieTableData> {
       'voteAverage': serializer.toJson<double?>(voteAverage),
       'releaseDate': serializer.toJson<String?>(releaseDate),
       'description': serializer.toJson<String?>(description),
+      'originLanguage': serializer.toJson<String?>(originLanguage),
+      'officialSite': serializer.toJson<String?>(officialSite),
+      'ended': serializer.toJson<String?>(ended),
     };
   }
 
@@ -108,7 +143,10 @@ class MovieTableData extends DataClass implements Insertable<MovieTableData> {
           String? picture,
           double? voteAverage,
           String? releaseDate,
-          String? description}) =>
+          String? description,
+          String? originLanguage,
+          String? officialSite,
+          String? ended}) =>
       MovieTableData(
         id: id ?? this.id,
         title: title ?? this.title,
@@ -116,6 +154,9 @@ class MovieTableData extends DataClass implements Insertable<MovieTableData> {
         voteAverage: voteAverage ?? this.voteAverage,
         releaseDate: releaseDate ?? this.releaseDate,
         description: description ?? this.description,
+        originLanguage: originLanguage ?? this.originLanguage,
+        officialSite: officialSite ?? this.officialSite,
+        ended: ended ?? this.ended,
       );
   @override
   String toString() {
@@ -125,14 +166,17 @@ class MovieTableData extends DataClass implements Insertable<MovieTableData> {
           ..write('picture: $picture, ')
           ..write('voteAverage: $voteAverage, ')
           ..write('releaseDate: $releaseDate, ')
-          ..write('description: $description')
+          ..write('description: $description, ')
+          ..write('originLanguage: $originLanguage, ')
+          ..write('officialSite: $officialSite, ')
+          ..write('ended: $ended')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, title, picture, voteAverage, releaseDate, description);
+  int get hashCode => Object.hash(id, title, picture, voteAverage, releaseDate,
+      description, originLanguage, officialSite, ended);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -142,7 +186,10 @@ class MovieTableData extends DataClass implements Insertable<MovieTableData> {
           other.picture == this.picture &&
           other.voteAverage == this.voteAverage &&
           other.releaseDate == this.releaseDate &&
-          other.description == this.description);
+          other.description == this.description &&
+          other.originLanguage == this.originLanguage &&
+          other.officialSite == this.officialSite &&
+          other.ended == this.ended);
 }
 
 class MovieTableCompanion extends UpdateCompanion<MovieTableData> {
@@ -152,6 +199,9 @@ class MovieTableCompanion extends UpdateCompanion<MovieTableData> {
   final Value<double?> voteAverage;
   final Value<String?> releaseDate;
   final Value<String?> description;
+  final Value<String?> originLanguage;
+  final Value<String?> officialSite;
+  final Value<String?> ended;
   const MovieTableCompanion({
     this.id = const Value.absent(),
     this.title = const Value.absent(),
@@ -159,6 +209,9 @@ class MovieTableCompanion extends UpdateCompanion<MovieTableData> {
     this.voteAverage = const Value.absent(),
     this.releaseDate = const Value.absent(),
     this.description = const Value.absent(),
+    this.originLanguage = const Value.absent(),
+    this.officialSite = const Value.absent(),
+    this.ended = const Value.absent(),
   });
   MovieTableCompanion.insert({
     this.id = const Value.absent(),
@@ -167,6 +220,9 @@ class MovieTableCompanion extends UpdateCompanion<MovieTableData> {
     this.voteAverage = const Value.absent(),
     this.releaseDate = const Value.absent(),
     this.description = const Value.absent(),
+    this.originLanguage = const Value.absent(),
+    this.officialSite = const Value.absent(),
+    this.ended = const Value.absent(),
   }) : title = Value(title);
   static Insertable<MovieTableData> custom({
     Expression<int>? id,
@@ -175,6 +231,9 @@ class MovieTableCompanion extends UpdateCompanion<MovieTableData> {
     Expression<double?>? voteAverage,
     Expression<String?>? releaseDate,
     Expression<String?>? description,
+    Expression<String?>? originLanguage,
+    Expression<String?>? officialSite,
+    Expression<String?>? ended,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -183,6 +242,9 @@ class MovieTableCompanion extends UpdateCompanion<MovieTableData> {
       if (voteAverage != null) 'vote_average': voteAverage,
       if (releaseDate != null) 'release_date': releaseDate,
       if (description != null) 'description': description,
+      if (originLanguage != null) 'origin_language': originLanguage,
+      if (officialSite != null) 'official_site': officialSite,
+      if (ended != null) 'ended': ended,
     });
   }
 
@@ -192,7 +254,10 @@ class MovieTableCompanion extends UpdateCompanion<MovieTableData> {
       Value<String?>? picture,
       Value<double?>? voteAverage,
       Value<String?>? releaseDate,
-      Value<String?>? description}) {
+      Value<String?>? description,
+      Value<String?>? originLanguage,
+      Value<String?>? officialSite,
+      Value<String?>? ended}) {
     return MovieTableCompanion(
       id: id ?? this.id,
       title: title ?? this.title,
@@ -200,6 +265,9 @@ class MovieTableCompanion extends UpdateCompanion<MovieTableData> {
       voteAverage: voteAverage ?? this.voteAverage,
       releaseDate: releaseDate ?? this.releaseDate,
       description: description ?? this.description,
+      originLanguage: originLanguage ?? this.originLanguage,
+      officialSite: officialSite ?? this.officialSite,
+      ended: ended ?? this.ended,
     );
   }
 
@@ -224,6 +292,15 @@ class MovieTableCompanion extends UpdateCompanion<MovieTableData> {
     if (description.present) {
       map['description'] = Variable<String?>(description.value);
     }
+    if (originLanguage.present) {
+      map['origin_language'] = Variable<String?>(originLanguage.value);
+    }
+    if (officialSite.present) {
+      map['official_site'] = Variable<String?>(officialSite.value);
+    }
+    if (ended.present) {
+      map['ended'] = Variable<String?>(ended.value);
+    }
     return map;
   }
 
@@ -235,7 +312,10 @@ class MovieTableCompanion extends UpdateCompanion<MovieTableData> {
           ..write('picture: $picture, ')
           ..write('voteAverage: $voteAverage, ')
           ..write('releaseDate: $releaseDate, ')
-          ..write('description: $description')
+          ..write('description: $description, ')
+          ..write('originLanguage: $originLanguage, ')
+          ..write('officialSite: $officialSite, ')
+          ..write('ended: $ended')
           ..write(')'))
         .toString();
   }
@@ -280,9 +360,35 @@ class $MovieTableTable extends MovieTable
   late final GeneratedColumn<String?> description = GeneratedColumn<String?>(
       'description', aliasedName, true,
       type: const StringType(), requiredDuringInsert: false);
+  final VerificationMeta _originLanguageMeta =
+      const VerificationMeta('originLanguage');
   @override
-  List<GeneratedColumn> get $columns =>
-      [id, title, picture, voteAverage, releaseDate, description];
+  late final GeneratedColumn<String?> originLanguage = GeneratedColumn<String?>(
+      'origin_language', aliasedName, true,
+      type: const StringType(), requiredDuringInsert: false);
+  final VerificationMeta _officialSiteMeta =
+      const VerificationMeta('officialSite');
+  @override
+  late final GeneratedColumn<String?> officialSite = GeneratedColumn<String?>(
+      'official_site', aliasedName, true,
+      type: const StringType(), requiredDuringInsert: false);
+  final VerificationMeta _endedMeta = const VerificationMeta('ended');
+  @override
+  late final GeneratedColumn<String?> ended = GeneratedColumn<String?>(
+      'ended', aliasedName, true,
+      type: const StringType(), requiredDuringInsert: false);
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        title,
+        picture,
+        voteAverage,
+        releaseDate,
+        description,
+        originLanguage,
+        officialSite,
+        ended
+      ];
   @override
   String get aliasedName => _alias ?? 'movie_table';
   @override
@@ -322,6 +428,22 @@ class $MovieTableTable extends MovieTable
           _descriptionMeta,
           description.isAcceptableOrUnknown(
               data['description']!, _descriptionMeta));
+    }
+    if (data.containsKey('origin_language')) {
+      context.handle(
+          _originLanguageMeta,
+          originLanguage.isAcceptableOrUnknown(
+              data['origin_language']!, _originLanguageMeta));
+    }
+    if (data.containsKey('official_site')) {
+      context.handle(
+          _officialSiteMeta,
+          officialSite.isAcceptableOrUnknown(
+              data['official_site']!, _officialSiteMeta));
+    }
+    if (data.containsKey('ended')) {
+      context.handle(
+          _endedMeta, ended.isAcceptableOrUnknown(data['ended']!, _endedMeta));
     }
     return context;
   }

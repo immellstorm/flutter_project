@@ -37,6 +37,7 @@ class _SettingsPageState extends State<SettingsPageContent> {
     return Scaffold(
       appBar: AppBar(
         title: Text(context.locale.settings),
+        centerTitle: true,
       ),
       body: Center(
         child: Column(

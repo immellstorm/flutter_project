@@ -29,6 +29,9 @@ ShowCardDataDTO _$ShowCardDataDTOFromJson(Map<String, dynamic> json) =>
               json['image'] as Map<String, dynamic>),
       releaseDate: json['premiered'] as String?,
       description: json['summary'] as String?,
+      originLanguage: json['language'] as String?,
+      officialSite: json['officialSite'] as String?,
+      ended: json['ended'] as String?,
     );
 
 Map<String, dynamic> _$ShowCardDataDTOToJson(ShowCardDataDTO instance) =>
@@ -38,6 +41,9 @@ Map<String, dynamic> _$ShowCardDataDTOToJson(ShowCardDataDTO instance) =>
       'image': instance.picture,
       'premiered': instance.releaseDate,
       'summary': instance.description,
+      'language': instance.originLanguage,
+      'officialSite': instance.officialSite,
+      'ended': instance.ended,
     };
 
 ShowCardDataImageDTO _$ShowCardDataImageDTOFromJson(

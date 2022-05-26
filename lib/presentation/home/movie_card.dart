@@ -50,7 +50,7 @@ class MovieCard extends StatelessWidget with GradeConversion {
                 imageUrl: '${movieCardModel?.picture}',
                 fit: BoxFit.cover,
                 errorWidget: (_, __, ___) =>
-                    Image.network(MovieQuery.pisecImageUrl),
+                    Image.network(MovieQuery.noImageUrl),
                 cacheManager: MoviePictures.pictureCache,
               ),
             ),
@@ -70,7 +70,8 @@ class MovieCard extends StatelessWidget with GradeConversion {
             style: Theme.of(context).textTheme.subtitle1,
           ),
           Padding(
-            padding: const EdgeInsets.all(8),
+            padding:
+                const EdgeInsets.only(top: 8, bottom: 3, left: 8, right: 8),
             child: PrimaryButton(
               textButton,
               onPressed: () {
@@ -79,18 +80,23 @@ class MovieCard extends StatelessWidget with GradeConversion {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(8),
+            padding:
+                const EdgeInsets.only(top: 5, bottom: 8, left: 8, right: 8),
             child: PrimaryButton(context.locale.description, onPressed: () {
               Navigator.pushNamed(
                 context,
                 '/description',
                 arguments: DescriptionArguments(
-                    movieCardModel!.id,
-                    movieCardModel!.title,
-                    movieCardModel!.picture,
-                    movieCardModel!.releaseDate,
-                    movieCardModel!.voteAverage,
-                    movieCardModel!.description),
+                  movieCardModel!.id,
+                  movieCardModel!.title,
+                  movieCardModel!.picture,
+                  movieCardModel!.releaseDate,
+                  movieCardModel!.voteAverage,
+                  movieCardModel!.description,
+                  movieCardModel!.originLanguage,
+                  movieCardModel!.officialSite,
+                  movieCardModel!.ended,
+                ),
               );
             }),
           )

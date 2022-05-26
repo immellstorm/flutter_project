@@ -40,4 +40,10 @@ abstract class LocaleBase {
   String get description;
 
   String get relaseData;
+
+  String get endedData;
+
+  String get originLanguage;
+
+  String get officialSite;
 }

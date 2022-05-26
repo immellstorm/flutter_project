@@ -129,7 +129,7 @@ class _Error extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.network(MovieQuery.pisecImageUrl, fit: BoxFit.cover);
+    return Image.network(MovieQuery.noImageUrl, fit: BoxFit.cover);
   }
 }
 

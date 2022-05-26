@@ -7,9 +7,12 @@ extension ShowCardFromDTOToDomain on ShowCardDTO {
       id: show?.id ?? 0,
       title: show?.title ?? '',
       picture: show?.picture?.original ?? '',
-      releaseDate: show?.releaseDate,
+      releaseDate: show?.releaseDate ?? '',
       voteAverage: score,
-      description: show?.description,
+      description: show?.description ?? '',
+      originLanguage: show?.originLanguage ?? '',
+      officialSite: show?.officialSite ?? '',
+      ended: show?.ended ?? '',
     );
   }
 }

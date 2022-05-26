@@ -63,4 +63,13 @@ class LocaleRu implements LocaleBase {
 
   @override
   String get relaseData => 'Дата релиза';
+
+  @override
+  String get endedData => 'Дата окончания';
+
+  @override
+  String get originLanguage => 'Язык';
+
+  @override
+  String get officialSite => 'Официальный сайт';
 }

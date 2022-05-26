@@ -6,7 +6,6 @@ import 'package:flutter_project/presentation/description/page/description_page.d
 
 class FilmDescription extends StatelessWidget {
   const FilmDescription({required this.arguments, Key? key}) : super(key: key);
-
   final DescriptionArguments arguments;
 
   @override
@@ -19,8 +18,7 @@ class FilmDescription extends StatelessWidget {
             imageUrl: '${arguments.picture}',
             fit: BoxFit.cover,
             width: double.infinity,
-            errorWidget: (_, __, ___) =>
-                Image.network(MovieQuery.pisecImageUrl),
+            errorWidget: (_, __, ___) => Image.network(MovieQuery.noImageUrl),
             cacheManager: MoviePictures.pictureCache,
           ),
         ),
@@ -42,18 +40,16 @@ class FilmDescription extends StatelessWidget {
                               padding: EdgeInsets.only(right: 8),
                               child: Icon(
                                 Icons.star,
-                                color: Colors.yellow,
+                                color: Colors.deepOrangeAccent,
                               ),
                             ),
                             Expanded(
-                              // оборачиваем наш текст в Expanded как указано в сообщении
                               child: Text(
                                 '${(context.locale.ratingPrefix)}  ${(arguments.voteAverage! * 10).toInt()}',
                                 style: const TextStyle(
                                     fontSize: 20,
                                     color: Colors.deepOrangeAccent),
-                                overflow: TextOverflow
-                                    .ellipsis, // и ограничиваем тремя точками в конце.
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                           ],
@@ -66,9 +62,35 @@ class FilmDescription extends StatelessWidget {
                           style: Theme.of(context).textTheme.headline6,
                         ),
                       ),
-                      Text(
-                        '${arguments.description}',
-                        style: const TextStyle(fontSize: 18),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8, bottom: 8),
+                        child: Text(
+                          '${(context.locale.endedData)}:  ${arguments.ended}',
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8, bottom: 8),
+                        child: Text(
+                          '${(context.locale.originLanguage)}:  ${arguments.originLanguage}',
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8, bottom: 8),
+                        child: Text(
+                          '${(context.locale.officialSite)}:  ${arguments.officialSite}',
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 16, bottom: 8),
+                        child: Text(
+                          removeAllHtmlTags(
+                            '${arguments.description}',
+                          ),
+                          style: const TextStyle(fontSize: 18),
+                        ),
                       ),
                     ],
                   ),
@@ -77,47 +99,11 @@ class FilmDescription extends StatelessWidget {
             )),
       ],
     );
-    //   Container(
-    //   child: Text('${arguments.title}'),
-    // );
-    // return Column(
-    //   children: [
-    //     BlocBuilder<HomeBloc, HomeState>(
-    //       builder: (context, state) {
-    //         return FutureBuilder<HomeModel?>(
-    //           future: state.data,
-    //           builder: (BuildContext context, AsyncSnapshot<HomeModel?> data) =>
-    //               Expanded(
-    //             child: ListView.builder(
-    //               itemBuilder: (BuildContext context, int index) {
-    //                 return MovieCard(
-    //                   textButton: 'text',
-    //                   movieCardModel: data.data?.results![arguments.id],
-    //                   key: ValueKey<int>(
-    //                       data.data?.results?[arguments.id].id ?? -1),
-    //                 );
-    //               },
-    //             ),
-    //           ),
-    //         );
-    //       },
-    //     ),
-    //   ],
-    // );
   }
 }
 
-// Widget build(BuildContext context) => BlocBuilder<HomeBloc, HomeState>(
-//       builder: (context, state) {
-//         return FutureBuilder<HomeModel?>(
-//             future: state.data,
-//             builder: (BuildContext context, AsyncSnapshot<HomeModel?> data) {
-//               return MovieCard(
-//                 movieCardModel: data.data?.results?[arguments.id],
-//                 key:
-//                     ValueKey<int>(data.data?.results?[arguments.id].id ?? -1),
-//                 textButton: 'text',
-//               );
-//             });
-//       },
-//     );
+String removeAllHtmlTags(String htmlText) {
+  RegExp exp = RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true);
+
+  return htmlText.replaceAll(exp, '');
+}

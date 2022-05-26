@@ -63,4 +63,13 @@ class LocaleEn implements LocaleBase {
 
   @override
   String get relaseData => 'Relase data';
+
+  @override
+  String get endedData => 'Ended data';
+
+  @override
+  String get originLanguage => 'Language';
+
+  @override
+  String get officialSite => 'Official site';
 }

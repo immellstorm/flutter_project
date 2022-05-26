@@ -10,4 +10,7 @@ class MovieTable extends Table {
   RealColumn get voteAverage => real().nullable()();
   TextColumn get releaseDate => text().nullable()();
   TextColumn get description => text().nullable()();
+  TextColumn get originLanguage => text().nullable()();
+  TextColumn get officialSite => text().nullable()();
+  TextColumn get ended => text().nullable()();
 }
